@@ -9,7 +9,7 @@
 #include "callbacks.hpp"
 
 #include <iostream>
-
+#include "Particle.h"
 
 
 using namespace physx;
@@ -28,9 +28,10 @@ PxPvd*                  gPvd        = NULL;
 PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
+Particle* particula = NULL;
 
 
-// Initialize physics engine
+// Initialize physics engine START DE LA ESCENA Y DE LAS FISICAS
 void initPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
@@ -43,7 +44,7 @@ void initPhysics(bool interactive)
 
 	gPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *gFoundation, PxTolerancesScale(),true,gPvd);
 
-	gMaterial = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);
+	gMaterial = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);//materail del suelo
 
 	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
 	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
@@ -53,18 +54,21 @@ void initPhysics(bool interactive)
 	sceneDesc.filterShader = contactReportFilterShader;
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
-	}
+	particula = new Particle(Vector3(0.0, 0.0, 0.0), Vector3(5.0, 5.0, 0.0));
+}
+
 
 
 // Function to configure what happens in each step of physics
 // interactive: true if the game is rendering, false if it offline
-// t: time passed since last call in milliseconds
+// t: time passed since last call in milliseconds &&UPDATE DE LA ESCENA
 void stepPhysics(bool interactive, double t)
 {
 	PX_UNUSED(interactive);
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
+	particula->integrate(t);
 }
 
 // Function to clean data
@@ -72,7 +76,6 @@ void stepPhysics(bool interactive, double t)
 void cleanupPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
-
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
 	gScene->release();
 	gDispatcher->release();
@@ -83,9 +86,10 @@ void cleanupPhysics(bool interactive)
 	transport->release();
 	
 	gFoundation->release();
-	}
+	delete particula; particula = nullptr;
+}
 
-// Function called when a key is pressed
+// Function called when a key is pressed INTERACIONAR CON TECLADO
 void keyPress(unsigned char key, const PxTransform& camera)
 {
 	PX_UNUSED(camera);
