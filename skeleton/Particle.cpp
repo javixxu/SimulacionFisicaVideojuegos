@@ -1,7 +1,7 @@
 #include "Particle.h"
 
 Particle::Particle(Vector3 Pos, Vector3 Vel):pose(Pos),vel(Vel) {
-	
+																//tipo de geometria    posicion   tamaño
 	renderItem = std::make_unique<RenderItem>(CreateShape(physx::PxSphereGeometry(2)), &pose, Vector4(1.0, 0.6, 0.2, 1.0));
 }
 
