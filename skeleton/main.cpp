@@ -30,7 +30,7 @@ PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 Particle* particula = NULL;
 
-
+std::vector<Particle*> cargador;
 // Initialize physics engine START DE LA ESCENA Y DE LAS FISICAS
 void initPhysics(bool interactive)
 {
@@ -55,7 +55,7 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 	
-	particula = new Particle(Vector3(0.0, 0.0, 0.0), Vector3(5.0, 15.0, 0.0),Vector3(1.5,-9.8,0.0));
+	//particula = new Particle(Vector3(0.0, 0.0, 0.0), Vector3(5.0, 15.0, 0.0),Vector3(1.5,-9.8,0.0));
 	
 }
 
@@ -70,7 +70,11 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
-	particula->integrate(t);
+	for (auto shot : cargador) {
+		if(shot!=nullptr)
+		shot->integrate(t);
+	}
+	
 }
 
 // Function to clean data
@@ -89,6 +93,10 @@ void cleanupPhysics(bool interactive)
 	
 	gFoundation->release();
 	delete particula; particula = nullptr;
+	for (auto shot : cargador) {
+		if (shot != nullptr)
+			delete shot;
+	}
 }
 
 // Function called when a key is pressed INTERACIONAR CON TECLADO
@@ -102,6 +110,35 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	//case ' ':	break;
 	case ' ':
 	{
+		break;
+	}
+	case 'G': {
+		auto bullet = new Particle(camera.p,
+			Vector3(5.0, 15.0, 0.0),Particle::TYPE::UNUSED);
+		Vector3 dirVel = GetCamera()->getDir() * 30;
+		bullet->setVelocity(dirVel);
+		bullet->setAcceleration(Vector3(0.0, -20.0, 0.0));
+		bullet->setMass(200.0);
+		bullet->setDamping(0.99);
+		cargador.push_back(bullet);
+		break;
+	}
+	case 'H': //Bola de fuego
+	{
+		auto bullet = new Particle(camera.p, GetCamera()->getDir() * 30, Vector4(255 / 250.0, 128 / 250.0, 0.0, 1.0), Particle::TYPE::PROYECTIL);
+		bullet->setAcceleration(Vector3(0.0, 0.6, 0.0));
+		bullet->setDamping(0.9);
+		bullet->setMass(1.0);
+		cargador.push_back(bullet);
+		break;
+	}
+	case 'F': //Laser
+	{
+		auto bullet = new Particle(camera.p, GetCamera()->getDir() * 30, Vector4(135 / 250.0, 206 / 250.0, 250 / 250.0, 1.0),Particle::TYPE::PROYECTIL);
+		bullet->setAcceleration(Vector3(0.0, 0.0, 0.0));
+		bullet->setDamping(0.99);
+		bullet->setMass(0.1);
+		cargador.push_back(bullet);
 		break;
 	}
 	default:
