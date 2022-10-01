@@ -19,7 +19,12 @@ Particle::~Particle(){
 }
 
 void Particle::integrate(double t){
+
 	pose.p += vel * t;
 	vel += acc*t;
 	vel *= powf(damping, t);
+}
+bool Particle::alive(double t) {
+	timeAlive -= t;
+	return timeAlive>0;
 }

@@ -1,6 +1,7 @@
 #include "Particle.h"
 
 class Proyectil :public Particle {
+private: TYPE TYPE;
 public:
 	Proyectil();
 	Proyectil(Vector3 Pos, Vector3 Vel);
