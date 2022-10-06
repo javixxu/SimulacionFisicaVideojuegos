@@ -30,7 +30,7 @@ PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 
 ParticleSystem* particleSystem;
-
+Particle* particula;
 // Initialize physics engine START DE LA ESCENA Y DE LAS FISICAS
 void initPhysics(bool interactive)
 {
@@ -55,7 +55,7 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 	
-	//particula = new Particle(Vector3(0.0, 0.0, 0.0), Vector3(5.0, 15.0, 0.0),Vector3(1.5,-9.8,0.0));
+	//particula = new Particle(Vector3(0.0, 0.0, 0.0), Vector3(0.0, 0.0, 0.0),Vector3(0.0,0.0,0.0),0.0,10.0,Particle::UNUSED);
 	particleSystem = new ParticleSystem();
 }
 
@@ -94,7 +94,7 @@ void cleanupPhysics(bool interactive)
 	gFoundation->release();
 
 	delete particleSystem;
-
+	
 	/*delete particula; particula = nullptr;
 	for (auto shot : cargador) {
 		if (shot != nullptr)

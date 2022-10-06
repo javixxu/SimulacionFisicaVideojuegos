@@ -12,14 +12,15 @@ class GaussianParticleGen:public ParticleGenerator
 	Particle molde;
 	normal_distribution<double>d{ 0,1 };
 	void generaMolde() {
-		molde.setVelocity(Vector3(20.0, 20.0, 0.0));
-		molde.setPosition(Vector3(15.0, 15.0, 0.0));
-		molde.setDamping(0.0);
+		molde.setVelocity(Vector3(4.0, 9.0, 0.0));
+		molde.setPosition(Vector3(0.0, 0.0, 0.0));
+		molde.setDamping(3.0);
 		molde.setTimeAlive(10.0);
-		molde.setAcceleration(Vector3(0.1, -2.8, 0.0));
+		molde.setMass(15.0);
+		molde.setAcceleration(Vector3(0.0, -10.0, 0.0));
 	}
 public:
 	GaussianParticleGen(Vector3	pos,Vector3 vel);
 	~GaussianParticleGen();
-	list<Particle*> generateParticles() override;
+	void generateParticles(list<Particle*>& l) override;
 };

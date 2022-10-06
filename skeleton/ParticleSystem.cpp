@@ -1,30 +1,36 @@
 #include "ParticleSystem.h"
 #include "GaussianParticleGen.h"
+#include <iostream>
 ParticleSystem::ParticleSystem() {
-	list_generator.push_back(new GaussianParticleGen(Vector3(10.0,10.0,0.0),Vector3(15.0,10.0,0.0)));
+	list_generator.push_back(new GaussianParticleGen(Vector3(8.0,5.0,8.0),Vector3(0.2,0.2,0.0)));
 	list_particles = list<Particle*>();
+	/*list_particles.push_back(new Particle(Vector3(15.0, 15.0, 0.0), Vector3(20.0, 20.0, 0.0), 
+		Vector3(0.1, -2.8, 0.0), 0.0, 10.0, Particle::UNUSED));*/
+	
 }
 ParticleSystem::~ParticleSystem() {
-	for (auto i = list_generator.begin(); i != list_generator.end(); i++){
-		delete* i;
-		list_generator.erase(i);
+	while (!list_generator.empty()) {
+		delete list_generator.front();
+		list_generator.pop_front();
 	}
-	for (auto i = list_particles.begin(); i != list_particles.end(); i++) {
-		delete* i;
-		list_particles.erase(i);
+	while( !list_particles.empty()) {	
+		delete list_particles.front();
+		list_particles.pop_front();			
 	}
 	
 }
 
 void ParticleSystem::update(double t) {
 	for (auto i = list_generator.begin(); i != list_generator.end(); i++) {
-		list<Particle*> aux = (*i)->generateParticles();
-		list_particles.merge(aux);
+		 (*i)->generateParticles(list_particles);	
+		 std::cout << list_particles.size() << std::endl;
 	}
 	for (auto i = list_particles.begin(); i != list_particles.end(); i++) {
 		if (!(*i)->alive(t)) {
 			delete* i;
-			list_particles.erase(i);
+			auto aux = i;
+			i++;
+			list_particles.erase(aux);			
 		}
 		else {
 			(*i)->integrate(t);

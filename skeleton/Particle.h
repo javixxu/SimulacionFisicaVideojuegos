@@ -11,7 +11,6 @@ class Particle{
 	double damping;//rozamiento
 	double mass;
 	double timeAlive;
-	double gravity;
 public: enum TYPE { UNUSED, PROYECTIL };
 private:TYPE type;
 public:
