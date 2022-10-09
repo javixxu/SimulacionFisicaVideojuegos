@@ -2,7 +2,7 @@
 #include "GaussianParticleGen.h"
 #include <iostream>
 ParticleSystem::ParticleSystem() {
-	list_generator.push_back(new GaussianParticleGen(Vector3(8.0,5.0,8.0),Vector3(0.2,0.2,0.0)));
+	list_generator.push_back(new GaussianParticleGen(Vector3(4.0,1.0,4.0),Vector3(0.2,0.2,0.0)));
 	list_particles = list<Particle*>();
 	/*list_particles.push_back(new Particle(Vector3(15.0, 15.0, 0.0), Vector3(20.0, 20.0, 0.0), 
 		Vector3(0.1, -2.8, 0.0), 0.0, 10.0, Particle::UNUSED));*/
@@ -27,8 +27,8 @@ void ParticleSystem::update(double t) {
 	}
 	for (auto i = list_particles.begin(); i != list_particles.end(); i++) {
 		if (!(*i)->alive(t)) {
-			delete* i;
 			auto aux = i;
+			delete* aux;
 			i++;
 			list_particles.erase(aux);			
 		}

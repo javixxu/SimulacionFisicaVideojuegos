@@ -9,7 +9,7 @@ GaussianParticleGen::~GaussianParticleGen() = default;
 void GaussianParticleGen:: generateParticles(list<Particle*>& l) {
 	std::random_device r;
 	Vector3 newpos, newvel; default_random_engine gnd(r());
-	for (int i = 0; i < 10; i++){
+	for (int i = 0; i < 5; i++){
 		newpos= molde.getPosition() + Vector3(devTip_pos.x * d(gnd), devTip_pos.y * d(gnd), devTip_pos.z * d(gnd));
 		newvel= molde.getVelocity() + Vector3(devTip_vel.x * d(gnd), devTip_vel.y * d(gnd), devTip_vel.z * d(gnd));
 		Particle* nueva = new Particle(newpos,newvel,molde.getAcceleration(),molde.getDamping(),molde.getMass(),Particle::UNUSED);
