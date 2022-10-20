@@ -9,18 +9,14 @@ class GaussianParticleGen:public ParticleGenerator
 {
 	Vector3 devTip_vel;
 	Vector3 devTip_pos;
-	Particle molde;
+	double desTip_t;
+
+	std::random_device r;
+	default_random_engine gnd;
 	normal_distribution<double>d{ 0,1 };
-	void generaMolde() {
-		molde.setVelocity(Vector3(30.0, 50.0, -6.0));
-		molde.setPosition(Vector3(-200.0, 0.0, -150.0));
-		molde.setDamping(0.999);
-		molde.setTimeAlive(10.0);
-		molde.setMass(15.0);
-		molde.setAcceleration(Vector3(0.0, -10.0, 0.0));
-	}
+
 public:
-	GaussianParticleGen(Vector3	pos,Vector3 vel);
+	GaussianParticleGen(Vector3	pos,Vector3 vel,double desvTiempo);
 	~GaussianParticleGen();
 	void generateParticles(list<Particle*>& l) override;
 };

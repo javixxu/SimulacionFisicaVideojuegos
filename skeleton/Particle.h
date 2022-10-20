@@ -7,7 +7,7 @@ class Particle{
 	Vector3 vel;
 	Vector3 acc;
 	physx::PxTransform pose;
-	std::unique_ptr<RenderItem> renderItem;
+	RenderItem* renderItem;
 	double damping;//rozamiento
 	double mass;
 	double timeAlive;
@@ -15,13 +15,13 @@ public: enum TYPE { UNUSED, PROYECTIL };
 private:TYPE type;
 public:
 	Particle():type(TYPE::UNUSED),damping(0.0),acc(Vector3()),vel(Vector3()) {};
-	Particle(Vector3 Pos, Vector3 Vel,TYPE Type);
+	Particle(Vector3 Pos, Vector3 Vel, TYPE Type);
 	Particle(Vector3 Pos, Vector3 Vel, Vector4 COLOR, TYPE Type);
-	Particle(Vector3 Pos, Vector3 Vel,Vector3 acceleration, double Damping,double Mass, TYPE Type);
+	Particle(Vector3 Pos, Vector3 Vel,Vector3 acceleration, double Damping,double Mass, TYPE Type, Vector4 COLOR);
 	~Particle();
 	void integrate(double t);
-
 	bool alive(double t);
+	virtual Particle* clone() const;
 
 	inline void setPosition(Vector3 Pos) {pose.p = Pos;}
 	inline void setVelocity(Vector3 Vel) {vel = Vel;}
