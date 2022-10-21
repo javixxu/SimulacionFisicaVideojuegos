@@ -3,8 +3,8 @@
 #include "UniformParticleGenenerator.h"
 #include <iostream>
 ParticleSystem::ParticleSystem() {
-	list_generator.push_back(new UniformParticleGenerator(Vector3(16,16.0,16.0), Vector3(0.0, 20.0, 0.0)));
-	list_particles = list<Particle*>();
+	/*list_generator.push_back(new UniformParticleGenerator(Vector3(16,16.0,16.0), Vector3(0.0, 20.0, 0.0)));
+	list_particles = list<Particle*>();*/
 	/*list_particles.push_back(new Particle(Vector3(15.0, 15.0, 0.0), Vector3(20.0, 20.0, 0.0), 
 		Vector3(0.1, -2.8, 0.0), 0.0, 10.0, Particle::UNUSED));*/
 	
@@ -22,20 +22,30 @@ ParticleSystem::~ParticleSystem() {
 }
 
 void ParticleSystem::update(double t) {
-	for (auto i = list_generator.begin(); i != list_generator.end(); i++) {
-		 (*i)->generateParticles(list_particles);	
-		 std::cout << list_particles.size() << std::endl;
+	for (auto g = list_generator.begin(); g != list_generator.end(); ++g)
+	{
+		if ((*g)->isActive())
+			(*g)->generateParticles(list_particles);
 	}
-	for (auto i = list_particles.begin(); i != list_particles.end(); i++) {
-		if (!(*i)->alive(t)) {
-			auto aux = i;
-			delete* aux;
-			i++;
-			list_particles.erase(aux);			
+
+	for (auto p = list_particles.begin(); p != list_particles.end(); ++p)
+	{
+		if ((*p)->alive(t))
+				(*p)->update(t);
+	}
+	for ( auto p:fireworks_pool){
+		if (p->alive(t))
+			(p)->update(t);
+		else onParticleDeath(p);
+	}
+	auto p = list_particles.begin();
+	while (p != list_particles.end()) {
+		if (!(*p)->alive(t)) {
+			delete *p;
+			p = list_particles.erase(p);
 		}
-		else {
-			(*i)->integrate(t);
-		}
+		else
+			p++;
 	}
 	
 }
@@ -45,4 +55,28 @@ ParticleGenerator* ParticleSystem::getParticleGenerator(string name) {
 	}
 	//si no lo encuentra
 	return nullptr;
+}
+
+void ParticleSystem::generateFireworkSystem(){
+
+}
+
+void ParticleSystem::shootFirework(Firework::FIREWORK_TYPE type){
+	switch (type){
+	case Firework::BASIC:
+		cout << "dfsdfsdf\n";
+		auto x = new Firework(Vector3(0, 0, 0), Vector3(0, 15, 0), Vector3(0, 1, 0), 0.9999, 1.0, Firework::BASIC);
+		x->setTimeAlive(15.0);
+		fireworks_pool.push_back(x);
+		auto xy = new Particle(Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), 0.9999, 1.0, Particle::UNUSED); xy->setTimeAlive(100000);
+		list_particles.push_back(xy);
+	break;
+	}
+}
+
+void ParticleSystem::onParticleDeath(Particle* pt) {
+	Firework* fk = dynamic_cast<Firework*>(pt);
+	if (fk != nullptr) {
+		fk->explode(list_particles);
+	}
 }
