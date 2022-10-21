@@ -21,5 +21,6 @@ public:
 	}
 	inline bool isActive() { return active; }
 	void setActive(bool x) { active = x; }
+	void setNumGenerator(int x) { num_particles = x; };
 };
 

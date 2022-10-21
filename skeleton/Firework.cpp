@@ -18,24 +18,31 @@ void Firework::update(double t){
 	integrate(t);
 }
 
-void Firework::explode(list<Particle*> list){
+void Firework::explode(list<Particle*>& list){
 	switch (type)
 	{
 	case Firework::BASIC:
-		/*double angle = 90.0; double radio = 50;
-		for (int i = 0; i < 20; i++){
-			Vector3 pos(50 + ,0,0);
-			angle += 360.0 / 20;
-		}*/
-		shared_ptr<Particle> x(clone());		
-		x->setVelocity(Vector3(10, 0, 0));
-		x->setAcceleration(Vector3()); x->setTimeAlive(initialTimeAlive / 2);
-		gens.push_back(x);
+		///*double angle = 90.0; double radio = 50;
+		//for (int i = 0; i < 20; i++){
+		//	Vector3 pos(50 + ,0,0);
+		//	angle += 360.0 / 20;
+		//}*/
+		//Particle* x(clone());		
+		//x->setVelocity(Vector3(10, 0, 0));
+		//x->setAcceleration(Vector3()); x->setTimeAlive(initialTimeAlive / 2);
+		//list.push_back(x);
 
-		shared_ptr<Particle> y(clone());
-		y->setVelocity(Vector3(-10, 0, 0));
-		y->setAcceleration(Vector3()); y->setTimeAlive(initialTimeAlive / 2);
-		gens.push_back(y);
+		//Particle* y(clone());
+		//y->setVelocity(Vector3(-10, 0, 0));
+		//y->setAcceleration(Vector3()); y->setTimeAlive(initialTimeAlive / 2);
+		//list.push_back(y);
+		for (auto it:gens){	
+			Particle* pt = clone(); pt->setAcceleration(Vector3(0, -10, 0));	
+			(*it).setNumGenerator(50);
+			(*it).setParticle(pt);
+			(*it).generateParticles(list);
+			 pt->setPosition(Vector3(10000, 100000, 0));
+		}
 	break;
 	
 	}
