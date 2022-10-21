@@ -11,7 +11,6 @@ UniformParticleGenerator::UniformParticleGenerator(Vector3 pos, Vector3 vel):vel
 	_model->setAcceleration(Vector3(0.0, 1.0, 0.0));
 	gnd = default_random_engine(r());
 	num_particles = 5;
-	active = true;
 }
 UniformParticleGenerator::~UniformParticleGenerator() {
 	delete _model;

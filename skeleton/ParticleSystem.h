@@ -17,10 +17,6 @@ public:
 	~ParticleSystem();
 	void update(double t);
 	ParticleGenerator* getParticleGenerator(string name);
-
 	void generateFireworkSystem();//no creado
-	void shootFirework(Firework::FIREWORK_TYPE type);
-	void onParticleDeath(Particle* pt);
-	
 };
 

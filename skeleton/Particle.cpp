@@ -9,7 +9,7 @@ Particle::Particle(Vector3 Pos, Vector3 Vel, Vector4 COLOR, TYPE Type = TYPE::UN
 	:pose(Pos), vel(Vel), acc(Vector3(0)), damping(1.0), mass(0.0), type(Type) {
 	renderItem = new RenderItem(CreateShape(physx::PxSphereGeometry(2)), &pose, COLOR);
 }
-Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 acceleration, double Damping=0.999,double Mass=0.0,TYPE Type=TYPE::UNUSED, Vector4 COLOR) :
+Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 acceleration, double Damping=0.999,double Mass=0.0,TYPE Type=TYPE::UNUSED, Vector4 COLOR= Vector4(1.0, 0.6, 0.2, 1.0)) :
 	pose(Pos), vel(Vel),acc(acceleration),damping(Damping),mass(Mass),type(Type) {
 	renderItem = new RenderItem(CreateShape(physx::PxSphereGeometry(2)), &pose,COLOR);
 }

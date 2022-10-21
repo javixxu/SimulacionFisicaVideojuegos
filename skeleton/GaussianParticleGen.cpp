@@ -11,7 +11,6 @@ GaussianParticleGen::GaussianParticleGen(Vector3 pos, Vector3 vel, double desvTi
 	_model->setAcceleration(Vector3(0.0, -10.0, 0.0));
 	gnd= default_random_engine(r());
 	num_particles = 5;
-	active = true;
 }
 
 GaussianParticleGen::~GaussianParticleGen() { delete _model; };

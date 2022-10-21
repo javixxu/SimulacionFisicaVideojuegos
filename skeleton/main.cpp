@@ -107,18 +107,25 @@ void keyPress(unsigned char key, const PxTransform& camera)
 {
 	PX_UNUSED(camera);
 
-	switch(toupper(key))
-	{
-	//case 'B': break;
-	//case ' ':	break;
-	case ' ':
-	{
-		break;
-	}
-	case 'Q': {
-		particleSystem->shootFirework(Firework::BASIC);
-		break;
-	}
+	//switch(toupper(key))
+	//{
+	////case 'B': break;
+	////case ' ':	break;
+	//case ' ':
+	//{
+	//	break;
+	//}
+	//case 'G': {
+	//	auto bullet = new Particle(camera.p,
+	//		Vector3(5.0, 15.0, 0.0),Particle::TYPE::UNUSED);
+	//	Vector3 dirVel = GetCamera()->getDir() * 30;
+	//	bullet->setVelocity(dirVel);
+	//	bullet->setAcceleration(Vector3(0.0, -20.0, 0.0));
+	//	bullet->setMass(200.0);
+	//	bullet->setDamping(0.99);
+	//	cargador.push_back(bullet);
+	//	break;
+	//}
 	//case 'H': //Bola de fuego
 	//{
 	//	auto bullet = new Particle(camera.p, GetCamera()->getDir() * 30, Vector4(255 / 250.0, 128 / 250.0, 0.0, 1.0), Particle::TYPE::PROYECTIL);
@@ -137,9 +144,9 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	//	cargador.push_back(bullet);
 	//	break;
 	//}
-	default:
-		break;
-	}
+	//default:
+	//	break;
+	//}
 }
 
 void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
