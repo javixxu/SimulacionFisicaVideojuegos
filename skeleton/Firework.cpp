@@ -37,8 +37,9 @@ void Firework::explode(list<Particle*>& list){
 		//y->setAcceleration(Vector3()); y->setTimeAlive(initialTimeAlive / 2);
 		//list.push_back(y);
 		for (auto it:gens){	
-			Particle* pt = clone(); pt->setAcceleration(Vector3(0, -10, 0));	
-			(*it).setNumGenerator(50);
+			Particle* pt = clone(); pt->setAcceleration(Vector3(0, -10, 0));
+			pt->setColor(Vector4(1.0, 0.0, 0.0, 1.0));
+			(*it).setNumGenerator(20);
 			(*it).setParticle(pt);
 			(*it).generateParticles(list);
 			 pt->setPosition(Vector3(10000, 100000, 0));

@@ -31,9 +31,8 @@ void ParticleSystem::update(double t) {
 	}
 
 	for (auto p = list_particles.begin(); p != list_particles.end(); ++p)
-	{
-		if ((*p)->alive(t))
-				(*p)->update(t);
+	{		
+		(*p)->update(t);
 	}
 	auto p = list_particles.begin();
 	while (p != list_particles.end()) {
