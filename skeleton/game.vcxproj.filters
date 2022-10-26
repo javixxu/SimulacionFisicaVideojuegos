@@ -17,6 +17,7 @@
     <ClCompile Include="UniformParticleGenerator.cpp" />
     <ClCompile Include="Firework.cpp" />
     <ClCompile Include="RocketGenerator.cpp" />
+    <ClCompile Include="CircleGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -36,6 +37,7 @@
     <ClInclude Include="UniformParticleGenenerator.h" />
     <ClInclude Include="Firework.h" />
     <ClInclude Include="RocketGenerator.h" />
+    <ClInclude Include="CircleGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

@@ -1,23 +1,19 @@
 #include "Particle.h"
 
-Particle::Particle(Vector3 Pos, Vector3 Vel,TYPE Type=UNUSED, Vector4 COLOR):pose(Pos),vel(Vel),acc(Vector3(0)),damping(0.999),mass(0.0),type(UNUSED),
-color(COLOR) {
-																//tipo de geometria    posicion   tamaño
-	renderItem = new RenderItem( CreateShape(physx::PxSphereGeometry(2)), &pose, color);
-}
 
-Particle::Particle(Vector3 Pos, Vector3 Vel, Vector4 COLOR, TYPE Type = TYPE::UNUSED)
-	:pose(Pos), vel(Vel), acc(Vector3(0)), damping(1.0), mass(0.0), type(Type), color(COLOR) {
-	renderItem = new RenderItem(CreateShape(physx::PxSphereGeometry(2)), &pose, color);
-}
-Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 acceleration, double Damping=0.999,double Mass=0.0,TYPE Type=TYPE::UNUSED, Vector4 COLOR) :
-	pose(Pos), vel(Vel),acc(acceleration),damping(Damping),mass(Mass),type(Type),color(COLOR) {
-	renderItem = new RenderItem(CreateShape(physx::PxSphereGeometry(2)), &pose,color);
+Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 acceleration, double Damping,double size,TYPE Type, Vector4 COLOR) :
+	pose(Pos), vel(Vel),acc(acceleration),damping(Damping),size_(size),type(Type),color(COLOR), isFire_(false) {
+	renderItem = new RenderItem(CreateShape(physx::PxSphereGeometry(size_)), &pose,color);
 }
 
 Particle::~Particle(){
 	//renderItem.release(); renderItem = nullptr;
 	DeregisterRenderItem(renderItem);
+}
+
+bool Particle::update(double t){
+	if (alive(t)) { integrate(t); return true; };
+	return false;
 }
 
 void Particle::integrate(double t){
@@ -28,10 +24,18 @@ void Particle::integrate(double t){
 Particle* Particle::clone() const
 {
 	Particle* ptr = new Particle(pose.p, vel, acc,
-		damping, mass, type);
-	ptr->timeAlive = timeAlive;
+		damping, size_, type, color);
+	ptr->setTimeAlive(initialTimeAlive);
+	ptr->setIsFire(isFire_);
+	ptr->setColor(color);
 	return ptr;
-};
+}
+void Particle::changeSize(double s, physx::PxTransform* pos, Vector4 c)
+{
+	DeregisterRenderItem(renderItem);
+	renderItem = new RenderItem(CreateShape(physx::PxSphereGeometry(s)), pos, c);
+}
+;
 bool Particle::alive(double t) {
 	timeAlive -= t;
 	return timeAlive>0;

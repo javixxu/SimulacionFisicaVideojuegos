@@ -55,7 +55,6 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 	
-	//particula = new Particle(Vector3(0.0, 0.0, 0.0), Vector3(0.0, 0.0, 0.0),Vector3(0.0,0.0,0.0),0.0,10.0,Particle::UNUSED);
 	particleSystem = new ParticleSystem();
 }
 
@@ -115,8 +114,32 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 		break;
 	}
-	case 'Q': {
+	case 'M':
+		particleSystem->generateHosepipeSystem();
+		break;
+	case 'N':
+		particleSystem->generateFogSystem();
+		break;
+	case 'L':
+		particleSystem->generateFlamesSystem();
+		break;
+	case 'E':
 		particleSystem->shootFirework(Firework::BASIC);
+		break;
+	case 'R':
+		particleSystem->shootFirework(Firework::LINEAR);
+		break;
+	case 'T':
+		particleSystem->shootFirework(Firework::CIRCULAR);
+		break;
+	case 'C':
+		particleSystem->generateCircleSystem();
+		break;
+	case '+':
+		particleSystem->increaseDesTip(Vector3(1.0, 1.0, 0.0));
+		break;
+	case '-':
+		particleSystem->increaseDesTip(Vector3(-1.0, -1.0, 0.0));
 		break;
 	}
 	//case 'H': //Bola de fuego
@@ -137,9 +160,8 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	//	cargador.push_back(bullet);
 	//	break;
 	//}
-	default:
-		break;
-	}
+	
+	//}
 }
 
 void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)

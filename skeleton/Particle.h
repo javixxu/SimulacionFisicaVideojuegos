@@ -13,18 +13,20 @@ protected:
 	double mass;
 	double timeAlive,initialTimeAlive;
 
+	bool isFire_;
+	double size_;
+
 	Vector4 color;
 public: enum TYPE { UNUSED, PROYECTIL,FIREWORK };
 private:TYPE type;
 public:
-	Particle():type(TYPE::UNUSED),damping(0.0),acc(Vector3()),vel(Vector3()) {};
-	Particle(Vector3 Pos, Vector3 Vel, TYPE Type, Vector4 COLOR = Vector4(1.0, 0.6, 0.2, 1.0));
-	Particle(Vector3 Pos, Vector3 Vel, Vector4 COLOR, TYPE Type);
-	Particle(Vector3 Pos, Vector3 Vel,Vector3 acceleration, double Damping,double Mass, TYPE Type, Vector4 COLOR = Vector4(1.0, 0.6, 0.2, 1.0));
+	//Particle(){};
+	Particle(Vector3 Pos=Vector3(0,0,0), Vector3 Vel = Vector3(0, 0, 0), Vector3 acceleration = Vector3(0, 0, 0),
+		double Damping = 0.999, double size = 2.0, TYPE Type = TYPE::UNUSED, Vector4 COLOR = Vector4(1.0, 0.6, 0.2, 1.0));
 	~Particle();
-	virtual void update(double t) { integrate(t); alive(t); };
+	virtual bool update(double t);
 	void integrate(double t);
-	bool alive(double t);
+	bool alive(double t=0.0);
 	virtual Particle* clone() const;
 
 	inline void setPosition(Vector3 Pos) {pose.p = Pos;}
@@ -33,7 +35,7 @@ public:
 	inline void setAcceleration(Vector3 Acc) {acc = Acc;}
 	inline void setDamping(double Damping) {damping = Damping;}
 	inline void setTimeAlive(double time) { initialTimeAlive=timeAlive=time;}
-	inline double getInitialTimeAlive() { return initialTimeAlive; }
+	
 
 	inline Vector3 getPosition() { return pose.p; }
 	inline Vector3 getVelocity() {return vel; }
@@ -41,8 +43,23 @@ public:
 	inline Vector3 getAcceleration() { return acc; }
 	inline double getDamping() { return damping; }
 	inline double getTimeAlive() {return timeAlive; }
+	inline double getInitialTimeAlive() { return initialTimeAlive; }
+	void changeSize(double s, physx::PxTransform* pos, Vector4 c);
+	inline double getSize() { return size_; };
+	inline physx::PxTransform* getTransform() {
+		return &pose;
+	}
 	inline void setColor(Vector4 c) {
 		color = c;
+	}
+	inline Vector4 getColor() {
+		return color;
+	}
+	inline bool isFire() {
+		return isFire_;
+	}
+	inline void setIsFire(bool f) {
+		isFire_ = f;
 	}
 };
 

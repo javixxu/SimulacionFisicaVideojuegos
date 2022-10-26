@@ -15,8 +15,10 @@ class GaussianParticleGen:public ParticleGenerator
 	default_random_engine gnd;
 	normal_distribution<double>d{ 0,1 };
 
+
 public:
 	GaussianParticleGen(Vector3	pos,Vector3 vel,double desvTiempo);
 	~GaussianParticleGen();
 	void generateParticles(list<Particle*>& l) override;
+	void increaseDesTipVel(Vector3 increase);
 };
