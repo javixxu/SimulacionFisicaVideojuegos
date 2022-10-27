@@ -29,6 +29,7 @@ void Firework::explode(list<Particle*>& list){
 			pt->setAcceleration(Vector3(0, -10, 0));
 			pt->setVelocity(pt->getVelocity());
 			pt->setColor(Vector4(1.0, 0.0, 0.0, 1.0));
+			if (pt->getSize() > 0.5)pt->setSize(0.5);
 			(*it).setNumGenerator(20);
 			(*it).setParticle(pt);
 			(*it).generateParticles(list);
@@ -47,12 +48,11 @@ void Firework::explode(list<Particle*>& list){
 			pt->setAcceleration(Vector3(1, -10/(numGen+1), 1));
 			pt->setVelocity(pt->getVelocity());
 
-			
-
 			(*it).setParticle(pt);
 			(*it).setNumGenerator(20);
+			if (pt->getSize() > 0.5)pt->setSize(0.5);
 			(*it).generateParticles(list);
-			pt->setPosition(Vector3(10000, 100000, 0));
+			pt->setPosition(Vector3(10000, 100000, 10000000));
 		}
 		break;
 	case Firework::CIRCULAR:
@@ -74,7 +74,7 @@ void Firework::explode(list<Particle*>& list){
 			(*it).setNumGenerator(20);
 			(*it).setParticle(pt);
 			(*it).generateParticles(list);
-			pt->setPosition(Vector3(10000, 100000, 0));
+			pt->setPosition(Vector3(1000000, 100000000, 100000));
 		}
 	break;
 	default:

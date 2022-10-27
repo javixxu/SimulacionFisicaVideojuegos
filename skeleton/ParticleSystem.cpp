@@ -6,23 +6,17 @@
 #include "RocketGenerator.h"
 ParticleSystem::ParticleSystem() {
 	list_particles = list<Particle*>();
-	auto xy = new Particle(Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), 0.9999, 1.0, Particle::UNUSED); xy->setTimeAlive(100000);
-	list_particles.push_back(xy);
-
-	shared_ptr<ParticleGenerator> it = shared_ptr<ParticleGenerator>(new UniformParticleGenerator(Vector3(2.0, 2.0, 2.0), Vector3(10.0, -5.0, 10.0)));
+	
+	shared_ptr<ParticleGenerator>it= shared_ptr<ParticleGenerator>(new GaussianParticleGen(Vector3(.0, .0, .0), Vector3(2.50, -2.0, 2.50),1.0));
 	list_generator.push_back(it);
 	(*it).changeActive();
 
-	RocketGenerator* aux = new RocketGenerator({ 0,0,0 }, { 0,-10,0 });
-	list_generator.push_back(shared_ptr<ParticleGenerator>(aux)); (*aux).changeActive();
-
-
 	it = shared_ptr<ParticleGenerator>(new CircleGenerator(30,10));
-	list_generator.push_back(it); (*it).setName("Circle");
+	list_generator.push_back(it); (*it).setName("CircleRockets"); it->changeActive();
 
 	generateFireworkSystem();
-	aux->setTypesRockets(fireworks_pool);
 }
+
 ParticleSystem::~ParticleSystem() {
 	while (!list_generator.empty()) {
 		//delete list_generator.front();
@@ -62,6 +56,7 @@ void ParticleSystem::update(double t) {
 	}
 	
 }
+
 shared_ptr<ParticleGenerator> ParticleSystem::getParticleGenerator(string name) {
 	for (auto i = list_generator.begin(); i != list_generator.end(); i++) {
 		if ((*i)->getName() == name)return (*i);
@@ -72,16 +67,16 @@ shared_ptr<ParticleGenerator> ParticleSystem::getParticleGenerator(string name) 
 
 void ParticleSystem::generateFireworkSystem(){
 	//se rellena el firework_pool(debemos generalos a tomar por culo) y se inicializa el fireworksystrem
-	auto rocket = list_generator.begin(); rocket++; auto circle =rocket; circle++;
+	auto circle = list_generator.begin(); circle++; 
 	//BASIC
-	auto x = new Firework(Vector3(10000000, 1000000000, 0), Vector3(0, 15, 0), Vector3(0, 1, 0), 0.9999, 1.0, Firework::BASIC);
-	x->addGenerator(list_generator.front()); //x->addGenerator(*rocket);
+	auto x = new Firework(Vector3(10000000, 1000000000, 0), Vector3(0, 25, 0), Vector3(0, 1, 0), 0.9999, 1.0, Firework::BASIC);
+	x->addGenerator(list_generator.front()); 
 	x->setTimeAlive(4.0);
 	fireworks_pool.push_back(x); x->setNumGen(0);
 
 	//LINEAR
 	x = new Firework(Vector3(10000000, 1000000000, 0), Vector3(0, 30, 0), Vector3(0, 2, 0), 0.9999, 1.0, Firework::LINEAR);
-	x->addGenerator(list_generator.front()); //x->addGenerator(*rocket);
+	x->addGenerator(list_generator.front()); 
 	x->setTimeAlive(4.0);
 	fireworks_pool.push_back(x); x->setNumGen(0);
 
@@ -127,6 +122,7 @@ void ParticleSystem::onParticleDeath(Particle* pt) {
 		fk->explode(list_particles);
 	}
 }
+
 void ParticleSystem::generateHosepipeSystem() {
 	shared_ptr<ParticleGenerator> p = getParticleGenerator("HosePipeSystem");
 	if (p != nullptr)
@@ -191,6 +187,23 @@ void ParticleSystem::generateCircleSystem() {
 
 		s->setParticle(p);
 		s->setNumGenerator(30);
+		list_generator.push_back(shared_ptr<ParticleGenerator>(s));
+	}
+}
+
+void ParticleSystem::generateRocketSystem() {
+	shared_ptr<ParticleGenerator> p = getParticleGenerator("RocketSystem");
+	if (p != nullptr)
+		p->changeActive();
+	else {
+		auto s = new RocketGenerator({ 0,0,0 }, { 10,-10,0 }); s->setName("RocketSystem");
+		Particle* p = new Particle(Vector3(0.0, 0.0, 0.0), Vector3(5.0, 20.0, 0.0), gravity, 0.999);
+		s->setTypesRockets(fireworks_pool);
+		p->setColor(Vector4(255 / 250.0, 128 / 250.0, 0.0, 1.0));
+		p->setTimeAlive(8.0);
+
+		s->setParticle(p);
+		s->setNumGenerator(1);
 		list_generator.push_back(shared_ptr<ParticleGenerator>(s));
 	}
 }

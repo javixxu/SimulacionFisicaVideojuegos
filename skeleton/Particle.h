@@ -46,6 +46,8 @@ public:
 	inline double getInitialTimeAlive() { return initialTimeAlive; }
 	void changeSize(double s, physx::PxTransform* pos, Vector4 c);
 	inline double getSize() { return size_; };
+	inline void setSize(double size) {  size_=size; };
+
 	inline physx::PxTransform* getTransform() {
 		return &pose;
 	}

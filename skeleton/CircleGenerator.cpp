@@ -7,7 +7,6 @@
 CircleGenerator::CircleGenerator(int max, int min){
 	min_ = min; max_ = max;
 	_model = new Particle();
-	active = false;
 }
 
 void CircleGenerator::generateParticles(list<Particle*>& l) {

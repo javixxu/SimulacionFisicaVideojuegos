@@ -16,7 +16,7 @@ void GaussianParticleGen:: generateParticles(list<Particle*>& l) {
 	for (int i = 0; i < num_particles; i++){
 		newpos= _model->getPosition() + Vector3(devTip_pos.x * d(gnd), devTip_pos.y * d(gnd), devTip_pos.z * d(gnd));
 		newvel= _model->getVelocity() + Vector3(devTip_vel.x * d(gnd), devTip_vel.y * d(gnd), devTip_vel.z * d(gnd));
-		//std::cout << newpos.x<<" ,"<< newpos.y<<" ," << newpos.z << endl;
+		
 		Particle* nueva = _model->clone(); 
 		nueva->setPosition(newpos);
 		nueva->setVelocity(newvel);

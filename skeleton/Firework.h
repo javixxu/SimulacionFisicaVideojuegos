@@ -7,7 +7,7 @@ using namespace std;
 class Firework :public Particle{
 	list<shared_ptr<ParticleGenerator>> gens;
 	int numGen=0;
-public:	enum FIREWORK_TYPE{BASIC=0,CIRCULAR,LINEAR,NONE};
+public:	enum FIREWORK_TYPE{BASIC=0,CIRCULAR=1,LINEAR=3,NONE=4};
 	  FIREWORK_TYPE type;
 public:
 	Firework();

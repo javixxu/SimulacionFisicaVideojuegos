@@ -135,6 +135,9 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	case 'C':
 		particleSystem->generateCircleSystem();
 		break;
+	case 'F':
+		particleSystem->generateRocketSystem();
+		break;
 	case '+':
 		particleSystem->increaseDesTip(Vector3(1.0, 1.0, 0.0));
 		break;
