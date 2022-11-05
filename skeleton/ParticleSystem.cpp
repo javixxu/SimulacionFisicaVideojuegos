@@ -4,12 +4,21 @@
 #include "CircleGenerator.h"
 #include <iostream>
 #include "RocketGenerator.h"
+#include "GravityForceGenerator.h"
 ParticleSystem::ParticleSystem() {
 	list_particles = list<Particle*>();
-	
+	pForceRegistry = ParticleForceRegistry();
+	list_forces = list<shared_ptr<ForceGenerator>>();
+
+	auto xy = new Particle(Vector3(0), Vector3(0)); xy->setTimeAlive(1000000000); list_particles.push_back(xy); xy->setMass(2.0);
 	shared_ptr<ParticleGenerator>it= shared_ptr<ParticleGenerator>(new GaussianParticleGen(Vector3(.0, .0, .0), Vector3(2.50, -2.0, 2.50),1.0));
 	list_generator.push_back(it);
 	(*it).changeActive();
+
+	auto gravityG = shared_ptr<ForceGenerator>(new GravityForceGenerator(gravity));
+	list_forces.push_back(gravityG);
+
+	pForceRegistry.addRegistry(gravityG, xy);
 
 	it = shared_ptr<ParticleGenerator>(new CircleGenerator(30,10));
 	list_generator.push_back(it); (*it).setName("CircleRockets"); it->changeActive();
@@ -22,7 +31,7 @@ ParticleSystem::~ParticleSystem() {
 		//delete list_generator.front();
 		list_generator.pop_front();
 	}
-	while( !list_particles.empty()) {	
+	while( !list_particles.empty()) {
 		delete list_particles.front();
 		list_particles.pop_front();			
 	}
@@ -30,11 +39,12 @@ ParticleSystem::~ParticleSystem() {
 		delete fireworks_pool[i];
 	}
 	fireworks_pool.clear();
+	
 }
 
 void ParticleSystem::update(double t) {
-	for (auto g = list_generator.begin(); g != list_generator.end(); ++g)
-	{
+	pForceRegistry.updateForces(t);
+	for (auto g = list_generator.begin(); g != list_generator.end(); ++g){
 		if ((*g)->isActive())
 			(*g)->generateParticles(list_particles);
 	}
@@ -48,9 +58,10 @@ void ParticleSystem::update(double t) {
 	auto p = list_particles.begin();
 	while (p != list_particles.end()) {
 		if (!(*p)->alive()) {
+			pForceRegistry.deleteParticleRegistry((*p));
 			onParticleDeath((*p));
 			delete *p;
-			p = list_particles.erase(p);
+			p = list_particles.erase(p);			
 		}
 		else p++;
 	}
@@ -130,8 +141,9 @@ void ParticleSystem::generateHosepipeSystem() {
 	else {
 		auto s = new GaussianParticleGen(Vector3(0.2, 0.2, 0.0),Vector3(4.0, 1.0, 4.0), 0.8);
 		s->setName("HosePipeSystem");
-		Particle* p = new Particle(Vector3(-50.0, 0.0, 0.0),Vector3(30.0, 15.0, -30.0), gravity,0.999,2.0,
-			Particle::UNUSED,Vector4(0.0, 0.7, 0.96, 1.0));
+		Particle* p = new Particle(Vector3(-50.0, 0.0, 0.0),Vector3(30.0, 15.0, -30.0), {0,0,0}, 0.999, 2.0,
+			Particle::UNUSED, Vector4(0.0, 0.7, 0.96, 1.0), 1.0); 
+		//pForceRegistry->addRegistry(list_forces.front().get(), p);
 		
 		p->setTimeAlive(2.0);
 		

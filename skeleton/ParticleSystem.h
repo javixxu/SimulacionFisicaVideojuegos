@@ -5,6 +5,7 @@
 #include "Particle.h"
 #include "ParticleGenerator.h"
 #include "Firework.h"
+#include "ParticleForceRegistry.h"
 
 using namespace std;
 class ParticleSystem{
@@ -13,7 +14,8 @@ class ParticleSystem{
 	list<shared_ptr<ParticleGenerator>>list_generator;
 	vector<Firework*> fireworks_pool;
 	Vector3 gravity = Vector3(0.0, -9.8, 0.0);
-
+	ParticleForceRegistry pForceRegistry;
+	list<shared_ptr<ForceGenerator>> list_forces;
 public:
 	ParticleSystem();
 	~ParticleSystem();
