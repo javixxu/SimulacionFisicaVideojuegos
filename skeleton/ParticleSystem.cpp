@@ -5,25 +5,23 @@
 #include <iostream>
 #include "RocketGenerator.h"
 #include "GravityForceGenerator.h"
-#include "ParticleDragGenerator.h"
+#include "WindGenerator.h"
 
 ParticleSystem::ParticleSystem() {
 	list_particles = list<Particle*>();
 	pForceRegistry =new ParticleForceRegistry();
 	list_forces = list<shared_ptr<ForceGenerator>>();
 
-	auto xy = new Particle(Vector3(0), Vector3(0)); xy->setTimeAlive(1000000000); list_particles.push_back(xy); xy->setMass(2.0);
 	shared_ptr<ParticleGenerator>it= shared_ptr<ParticleGenerator>(new GaussianParticleGen(Vector3(.0, .0, .0), Vector3(2.50, -2.0, 2.50),1.0));
 	list_generator.push_back(it);
 	(*it).changeActive();
 
-	auto DragGenerator = shared_ptr<ForceGenerator>(new ParticleDragGenerator(0.5,0));
-	list_forces.push_back(DragGenerator); DragGenerator.get()->setName("DragGenerator");
+	auto DragGenerator = shared_ptr<ForceGenerator>(new WindGenerator({ 2.0,1.0,0.0 },5,0.0));
+	list_forces.push_back(DragGenerator); DragGenerator.get()->setName("WindGenerator");
 	
 
 	auto gravityG = shared_ptr<ForceGenerator>(new GravityForceGenerator(gravity));
 	list_forces.push_back(gravityG);gravityG.get()->setName("Gravity");
-	pForceRegistry->addRegistry(gravityG, xy);
 
 	gravityG = shared_ptr<ForceGenerator>(new GravityForceGenerator(Vector3(0, 6, 0)));
 	list_forces.push_back(gravityG); gravityG.get()->setName("Gravity2");
@@ -177,9 +175,10 @@ void ParticleSystem::generateFogSystem() {
 	else {
 		auto s = new GaussianParticleGen(Vector3(20.0, 8.0, 5.0), Vector3(0.2, 0.1, 0.2), 0.6);
 		s->setName("FogSystem");		
-		Particle* p = new Particle(Vector3(0.0, 30.0, 0.0), Vector3(2.5, 3.0, -2.5), Vector3(0, 0, 0), 0.75,0.3);
-		p->setColor(Vector4(1.0, 1.0, 1.0, 0.25));
-		pForceRegistry->addRegistry(getForceGenerator("DragGenerator"), p);
+		Particle* p = new Particle(Vector3(0.0, 30.0, 0.0), Vector3(2.5, 3.0, -2.5), Vector3(0, 0, 0), 0.75,0.3,
+			Particle::UNUSED,Vector4(1.0, 1.0, 1.0, 0.25));
+		pForceRegistry->addRegistry(getForceGenerator("WindGenerator"), p);
+		pForceRegistry->addRegistry(getForceGenerator("Gravity"), p);
 		p->setTimeAlive(1.0);		
 		s->setParticle(p);
 		s->setNumGenerator(30);

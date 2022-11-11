@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include "core.hpp"
+#include <string>
 
 using namespace std;
 
@@ -21,7 +22,6 @@ protected:
 
 	bool isFire_;
 	double size_;
-
 	Vector4 color;
 public: enum TYPE { UNUSED, PROYECTIL,FIREWORK };
 private:TYPE type;
