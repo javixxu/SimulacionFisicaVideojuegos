@@ -17,11 +17,14 @@ void GaussianParticleGen:: generateParticles(list<Particle*>& l) {
 		newpos= _model->getPosition() + Vector3(devTip_pos.x * d(gnd), devTip_pos.y * d(gnd), devTip_pos.z * d(gnd));
 		newvel= _model->getVelocity() + Vector3(devTip_vel.x * d(gnd), devTip_vel.y * d(gnd), devTip_vel.z * d(gnd));
 		
-		Particle* nueva = _model->clone(); 
+		Particle* nueva = _model->clone();
 		nueva->setPosition(newpos);
 		nueva->setVelocity(newvel);
 		nueva->setTimeAlive(_model->getInitialTimeAlive()+desTip_t*d(gnd));
 		nueva->setIsFire(_model->isFire());
+		for (int i = 0; i < _model->forcesNames.size(); i++)
+			pfr->addRegistry(pfr->getForceGenenarion(_model->forcesNames[i]), nueva);
+		
 		l.push_back(nueva);
 	}
 }

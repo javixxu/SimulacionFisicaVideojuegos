@@ -22,7 +22,7 @@ void Particle::integrate(double t){
 	//update position
 	pose.p += vel * t;
 	Vector3 totalAcceleration = acc;
-	totalAcceleration += force * inverse_mass;
+	totalAcceleration += force * mass/*inverse_mass*/;
 	//Update linear velocity
 	vel += totalAcceleration *t;
 	//Impose drag (damping)
@@ -33,7 +33,7 @@ void Particle::integrate(double t){
 Particle* Particle::clone() const
 {
 	Particle* ptr = new Particle(pose.p, vel, acc,
-		damping, size_, type, color);
+		damping, size_, type, color,mass);
 	ptr->setTimeAlive(initialTimeAlive);
 	ptr->setIsFire(isFire_);
 	ptr->setColor(color);

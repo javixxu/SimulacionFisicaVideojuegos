@@ -14,13 +14,14 @@ class ParticleSystem{
 	list<shared_ptr<ParticleGenerator>>list_generator;
 	vector<Firework*> fireworks_pool;
 	Vector3 gravity = Vector3(0.0, -9.8, 0.0);
-	ParticleForceRegistry pForceRegistry;
+	ParticleForceRegistry* pForceRegistry;
 	list<shared_ptr<ForceGenerator>> list_forces;
 public:
 	ParticleSystem();
 	~ParticleSystem();
 	void update(double t);
 	shared_ptr<ParticleGenerator> getParticleGenerator(string name);
+	shared_ptr<ForceGenerator> getForceGenerator(string name);
 
 	void generateFireworkSystem();//no creado
 	void generateFogSystem();

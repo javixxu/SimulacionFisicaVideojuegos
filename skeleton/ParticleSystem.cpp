@@ -5,9 +5,11 @@
 #include <iostream>
 #include "RocketGenerator.h"
 #include "GravityForceGenerator.h"
+#include "ParticleDragGenerator.h"
+
 ParticleSystem::ParticleSystem() {
 	list_particles = list<Particle*>();
-	pForceRegistry = ParticleForceRegistry();
+	pForceRegistry =new ParticleForceRegistry();
 	list_forces = list<shared_ptr<ForceGenerator>>();
 
 	auto xy = new Particle(Vector3(0), Vector3(0)); xy->setTimeAlive(1000000000); list_particles.push_back(xy); xy->setMass(2.0);
@@ -15,10 +17,18 @@ ParticleSystem::ParticleSystem() {
 	list_generator.push_back(it);
 	(*it).changeActive();
 
-	auto gravityG = shared_ptr<ForceGenerator>(new GravityForceGenerator(gravity));
-	list_forces.push_back(gravityG);
+	auto DragGenerator = shared_ptr<ForceGenerator>(new ParticleDragGenerator(0.5,0));
+	list_forces.push_back(DragGenerator); DragGenerator.get()->setName("DragGenerator");
+	
 
-	pForceRegistry.addRegistry(gravityG, xy);
+	auto gravityG = shared_ptr<ForceGenerator>(new GravityForceGenerator(gravity));
+	list_forces.push_back(gravityG);gravityG.get()->setName("Gravity");
+	pForceRegistry->addRegistry(gravityG, xy);
+
+	gravityG = shared_ptr<ForceGenerator>(new GravityForceGenerator(Vector3(0, 6, 0)));
+	list_forces.push_back(gravityG); gravityG.get()->setName("Gravity2");
+
+	
 
 	it = shared_ptr<ParticleGenerator>(new CircleGenerator(30,10));
 	list_generator.push_back(it); (*it).setName("CircleRockets"); it->changeActive();
@@ -43,7 +53,7 @@ ParticleSystem::~ParticleSystem() {
 }
 
 void ParticleSystem::update(double t) {
-	pForceRegistry.updateForces(t);
+	pForceRegistry->updateForces(t);
 	for (auto g = list_generator.begin(); g != list_generator.end(); ++g){
 		if ((*g)->isActive())
 			(*g)->generateParticles(list_particles);
@@ -58,7 +68,7 @@ void ParticleSystem::update(double t) {
 	auto p = list_particles.begin();
 	while (p != list_particles.end()) {
 		if (!(*p)->alive()) {
-			pForceRegistry.deleteParticleRegistry((*p));
+			pForceRegistry->deleteParticleRegistry((*p));
 			onParticleDeath((*p));
 			delete *p;
 			p = list_particles.erase(p);			
@@ -70,6 +80,14 @@ void ParticleSystem::update(double t) {
 
 shared_ptr<ParticleGenerator> ParticleSystem::getParticleGenerator(string name) {
 	for (auto i = list_generator.begin(); i != list_generator.end(); i++) {
+		if ((*i)->getName() == name)return (*i);
+	}
+	//si no lo encuentra
+	return nullptr;
+}
+
+shared_ptr<ForceGenerator> ParticleSystem::getForceGenerator(string name) {
+	for (auto i = list_forces.begin(); i != list_forces.end(); i++) {
 		if ((*i)->getName() == name)return (*i);
 	}
 	//si no lo encuentra
@@ -143,11 +161,11 @@ void ParticleSystem::generateHosepipeSystem() {
 		s->setName("HosePipeSystem");
 		Particle* p = new Particle(Vector3(-50.0, 0.0, 0.0),Vector3(30.0, 15.0, -30.0), {0,0,0}, 0.999, 2.0,
 			Particle::UNUSED, Vector4(0.0, 0.7, 0.96, 1.0), 1.0); 
-		//pForceRegistry->addRegistry(list_forces.front().get(), p);
-		
+		p->setMass(.3);
 		p->setTimeAlive(2.0);
-		
+		pForceRegistry->addRegistry(getForceGenerator("Gravity"), p);
 		s->setParticle(p);
+		s->addParticleForceRegistry(pForceRegistry);
 		list_generator.push_back(shared_ptr<ParticleGenerator>(s));
 	}
 }
@@ -159,11 +177,13 @@ void ParticleSystem::generateFogSystem() {
 	else {
 		auto s = new GaussianParticleGen(Vector3(20.0, 8.0, 5.0), Vector3(0.2, 0.1, 0.2), 0.6);
 		s->setName("FogSystem");		
-		Particle* molde = new Particle(Vector3(0.0, 30.0, 0.0), Vector3(2.5, 3.0, -2.5), Vector3(0, -5, 0), 0.75,0.3);
-		molde->setColor(Vector4(1.0, 1.0, 1.0, 0.25));
-		molde->setTimeAlive(1.0);
-		s->setParticle(molde);
+		Particle* p = new Particle(Vector3(0.0, 30.0, 0.0), Vector3(2.5, 3.0, -2.5), Vector3(0, 0, 0), 0.75,0.3);
+		p->setColor(Vector4(1.0, 1.0, 1.0, 0.25));
+		pForceRegistry->addRegistry(getForceGenerator("DragGenerator"), p);
+		p->setTimeAlive(1.0);		
+		s->setParticle(p);
 		s->setNumGenerator(30);
+		s->addParticleForceRegistry(pForceRegistry);
 		list_generator.push_back(shared_ptr<ParticleGenerator>(s));
 	}
 }
@@ -175,14 +195,15 @@ void ParticleSystem::generateFlamesSystem() {
 	else {
 		auto s = new GaussianParticleGen( Vector3(10.0, 5.5, 5.0),Vector3(0.2, 0.1, 0.2), 0.3);
 		s->setName("FlamesSystem");
-
-		Particle* p = new Particle(Vector3(1.0, 5.0, -1.0), Vector3(0.0, 10.0, 0.0), Vector3(0, 6, 0), 0.9,0.5);
+		
+		Particle* p = new Particle(Vector3(1.0, 5.0, -1.0), Vector3(0.0, 10.0, 0.0), Vector3(0, 0, 0), 0.9,0.5);
 		p->setColor(Vector4(255 / 250.0, 128 / 250.0, 0.0, 0.5));
 		p->setTimeAlive(3.0);
-		
+		pForceRegistry->addRegistry(getForceGenerator("Gravity2"), p);
 		p->setIsFire(true);
 		s->setParticle(p);
 		s->setNumGenerator(30);
+		s->addParticleForceRegistry(pForceRegistry);
 		list_generator.push_back(shared_ptr<ParticleGenerator>(s));
 	}
 }
