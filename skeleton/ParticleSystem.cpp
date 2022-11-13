@@ -6,6 +6,7 @@
 #include "RocketGenerator.h"
 #include "GravityForceGenerator.h"
 #include "WindGenerator.h"
+#include "WhirlWindGenerator.h"
 
 ParticleSystem::ParticleSystem() {
 	list_particles = list<Particle*>();
@@ -19,6 +20,8 @@ ParticleSystem::ParticleSystem() {
 	auto DragGenerator = shared_ptr<ForceGenerator>(new WindGenerator({ 2.0,1.0,0.0 },5,0.0));
 	list_forces.push_back(DragGenerator); DragGenerator.get()->setName("WindGenerator");
 	
+	DragGenerator = shared_ptr<ForceGenerator>(new WhirlWindGenerator({0,0,0}, { 2.0,1.0,0.0 }, 20.0));
+	list_forces.push_back(DragGenerator); DragGenerator.get()->setName("WhirlGenerator");
 
 	auto gravityG = shared_ptr<ForceGenerator>(new GravityForceGenerator(gravity));
 	list_forces.push_back(gravityG);gravityG.get()->setName("Gravity");
@@ -180,6 +183,25 @@ void ParticleSystem::generateFogSystem() {
 		pForceRegistry->addRegistry(getForceGenerator("WindGenerator"), p);
 		pForceRegistry->addRegistry(getForceGenerator("Gravity"), p);
 		p->setTimeAlive(1.0);		
+		s->setParticle(p);
+		s->setNumGenerator(30);
+		s->addParticleForceRegistry(pForceRegistry);
+		list_generator.push_back(shared_ptr<ParticleGenerator>(s));
+	}
+}
+
+void ParticleSystem::generateWhirlSystem() {
+	shared_ptr<ParticleGenerator> p = getParticleGenerator("WhirlSystem");
+	if (p != nullptr)
+		p->changeActive();
+	else {
+		auto s = new GaussianParticleGen(Vector3(20.0, 8.0, 5.0), Vector3(0.2, 0.1, 0.2), 0.6);
+		s->setName("WhirlSystem");
+		Particle* p = new Particle(Vector3(0.0, 30.0, 0.0), Vector3(2.5, 3.0, -2.5), Vector3(0, 0, 0), 0.75, 0.3,
+			Particle::UNUSED, Vector4(1.0, 1.0, 1.0, 0.25));
+		pForceRegistry->addRegistry(getForceGenerator("WhirlGenerator"), p);
+		pForceRegistry->addRegistry(getForceGenerator("Gravity"), p);
+		p->setTimeAlive(1.0);
 		s->setParticle(p);
 		s->setNumGenerator(30);
 		s->addParticleForceRegistry(pForceRegistry);

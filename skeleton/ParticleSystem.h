@@ -29,6 +29,7 @@ public:
 	void generateHosepipeSystem();
 	void generateCircleSystem();
 	void generateRocketSystem();
+	void generateWhirlSystem();
 	void increaseDesTip(Vector3 increase);
 
 	void shootFirework(Firework::FIREWORK_TYPE type);
