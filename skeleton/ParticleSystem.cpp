@@ -224,12 +224,12 @@ void ParticleSystem::generateExplosionSystem() {
 		p->changeActive();
 	}
 	else {
-		Particle* p = new Particle(Vector3(5.0, 0.0, 0.0), Vector3(0.0, 0.0, 0.0), Vector3(0, 0, 0), 0.75, 1.0,
+		Particle* p = new Particle(Vector3(0.0, 0.0, 0.0), Vector3(0.0, 0.0, 0.0), Vector3(0, 0, 0), 0.75, 1.0,
 			Particle::UNUSED, Vector4(1.0, 1.0, 1.0, 0.25), 2.0);
 		auto s = new GaussianParticleGen(Vector3(5.0, 5.0, 5.0), Vector3(0.0, 0.0, 0.0), 0.6);
 		s->setName("ExplosionSystem");
 		pForceRegistry->addRegistry(getForceGenerator("ExplosionForceGenerator"), p);
-		p->setTimeAlive(10.0);
+		p->setTimeAlive(4.0);
 		s->setParticle(p);
 		s->setNumGenerator(30);
 		s->addParticleForceRegistry(pForceRegistry);
