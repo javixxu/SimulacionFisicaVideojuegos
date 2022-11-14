@@ -118,7 +118,19 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		particleSystem->generateHosepipeSystem();
 		break;
 	case 'N':
+		particleSystem->generateFogSystem();
+		break;
+	case 'V':
 		particleSystem->generateWhirlSystem();
+		break;
+	case 'J':
+		particleSystem->generateExplosionSystem();
+		break;
+	case 'Y':
+		particleSystem->explosion(true);
+		break;
+	case 'I':
+		particleSystem->explosion(false);
 		break;
 	case 'L':
 		particleSystem->generateFlamesSystem();

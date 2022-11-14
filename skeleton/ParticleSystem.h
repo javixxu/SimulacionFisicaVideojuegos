@@ -30,10 +30,11 @@ public:
 	void generateCircleSystem();
 	void generateRocketSystem();
 	void generateWhirlSystem();
+	void generateExplosionSystem();
 	void increaseDesTip(Vector3 increase);
 
 	void shootFirework(Firework::FIREWORK_TYPE type);
 	void onParticleDeath(Particle* pt);
-	
+	void explosion(bool activee);
 };
 

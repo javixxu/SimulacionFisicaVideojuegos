@@ -9,6 +9,6 @@ void WhirlWindGenerator::updateForce(Particle* p, double duration) {
 	WindGenerator::updateForce(p, duration);
 };
 void WhirlWindGenerator::calculateVelocityWind(Vector3 pos) {
-	velWind = {-(pos.z-velWind.z),50-(pos.y-velWind.y),pos.x-velWind.x};
+	velWind = {-(pos.z-centre.z),50-(pos.y-centre.y),pos.x-centre.x};
 	velWind *= K;
 }
