@@ -29,6 +29,7 @@ public:
 	void generateHosepipeSystem();
 	void generateCircleSystem();
 	void generateRocketSystem();
+	void generateWindSystem();
 	void generateWhirlSystem();
 	void generateExplosionSystem();
 	void increaseDesTip(Vector3 increase);

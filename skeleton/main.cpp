@@ -120,10 +120,13 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	case 'N':
 		particleSystem->generateFogSystem();
 		break;
-	case 'V':
+	case 'O':
+		particleSystem->generateWindSystem();
+		break;
+	case 'P':
 		particleSystem->generateWhirlSystem();
 		break;
-	case 'J':
+	case 'U':
 		particleSystem->generateExplosionSystem();
 		break;
 	case 'Y':
