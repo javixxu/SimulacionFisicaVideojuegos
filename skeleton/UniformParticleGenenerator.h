@@ -14,7 +14,7 @@ class UniformParticleGenerator :public ParticleGenerator
 	std::default_random_engine gnd;
 	uniform_real_distribution<double>d{-0.5,0.5};
 public:
-	UniformParticleGenerator(Vector3 pos, Vector3 vel);
+	UniformParticleGenerator(Vector3 pos, Vector3 vel,double massi=0, bool rgb = false);
 	~UniformParticleGenerator();
 	void generateParticles(list<Particle*>& l) override;
 };

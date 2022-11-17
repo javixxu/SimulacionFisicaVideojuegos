@@ -17,7 +17,7 @@ class GaussianParticleGen:public ParticleGenerator
 
 
 public:
-	GaussianParticleGen(Vector3	pos,Vector3 vel,double desvTiempo);
+	GaussianParticleGen(Vector3	pos,Vector3 vel,double desvTiempo, double mass=0, bool rgb=false);
 	~GaussianParticleGen();
 	void generateParticles(list<Particle*>& l) override;
 	void increaseDesTipVel(Vector3 increase);

@@ -13,6 +13,8 @@ protected:
 	Particle* _model;
 	bool active;
 	ParticleForceRegistry* pfr;
+	bool rgbRandom;
+	double mass;
 public:	
 	virtual void generateParticles(list<Particle*>& l)=0;
 	void setName(string Name) { name = Name; }
