@@ -8,6 +8,8 @@
 #include "WindGenerator.h"
 #include "WhirlWindGenerator.h"
 #include "ExplosionForceGenerator.h"
+#include "SpringForceGenerator.h"
+#include "AnchoredSpringFG.h"
 
 ParticleSystem::ParticleSystem() {
 	list_particles = list<Particle*>();
@@ -37,6 +39,7 @@ ParticleSystem::ParticleSystem() {
 
 	auto ExplosionGenerator = shared_ptr<ForceGenerator>(new ExplosionForceGenerator(50, 900, {0,0,0},3.0));
 	list_forces.push_back(ExplosionGenerator); ExplosionGenerator.get()->setName("ExplosionForceGenerator");
+
 }
 
 ParticleSystem::~ParticleSystem() {
@@ -310,6 +313,28 @@ void ParticleSystem::generateRocketSystem() {
 		list_generator.push_back(shared_ptr<ParticleGenerator>(s));
 	}
 }
+
+void ParticleSystem::generateSpringSystem() {
+	//shared_ptr<ForceGenerator> p = getForceGenerator("SpringSystem1");
+	
+		Particle* p1 = new Particle({ -10.0,10.0,0.0 }, { 0.0,0.0,0.0 }, { 0,0,0 }, 0.85, 2.0, Particle::UNUSED, { 1.0,0.0,0.0,1.0 },2.0);
+		Particle* p2 = new Particle({ 10.0,10.0,0.0 }, { 0.0,0.0,0.0 }, { 0,0,0 }, 0.85, 2.0, Particle::UNUSED, { 0.0,1.0,0.0,1.0 },2.0);
+		p1->setMass(2.0); p2->setMass(2.0); p1->setTimeAlive(60); p2->setTimeAlive(60);
+		auto it = shared_ptr<ForceGenerator>(new SpringForceGenerator(p2, 10.0, 15.0)); it->setName("SpringSystem1");
+		list_forces.push_back(it);pForceRegistry->addRegistry(it, p1); 
+		it = shared_ptr<ForceGenerator>(new SpringForceGenerator(p1, 10.0, 15.0)); it->setName("SpringSystem2");
+		list_forces.push_back(it); pForceRegistry->addRegistry(it, p2); 
+		list_particles.push_back(p1);
+		list_particles.push_back(p2);
+		
+		Particle* p3 = new Particle({ -10.0, 20.0, 0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85,2.0,Particle::UNUSED,{ 1.0, 1.0, 1.0, 1.0 });
+		p3->setTimeAlive(60);
+		auto f3 = shared_ptr<ForceGenerator>(new AnchoredSpringFG(10, 10, { 10.0, 20.0, 0.0 }));
+		pForceRegistry->addRegistry(f3, p3); pForceRegistry->addRegistry(getForceGenerator("Gravity"), p3);
+		list_forces.push_back(f3);
+		list_particles.push_back(p3);
+}
+
 
 void ParticleSystem::increaseDesTip(Vector3 increase)
 {

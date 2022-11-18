@@ -135,6 +135,9 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	case 'I':
 		particleSystem->explosion(false);
 		break;
+	case 'C':
+		particleSystem->explosion(false);
+		break;
 	case 'L':
 		particleSystem->generateFlamesSystem();
 		break;
@@ -147,8 +150,8 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	case 'T':
 		particleSystem->shootFirework(Firework::CIRCULAR);
 		break;
-	case 'C':
-		particleSystem->generateCircleSystem();
+	case 'J':
+		particleSystem->generateSpringSystem();
 		break;
 	case 'F':
 		particleSystem->generateRocketSystem();

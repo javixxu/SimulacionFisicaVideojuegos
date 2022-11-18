@@ -29,6 +29,7 @@ public:
 	void generateHosepipeSystem();
 	void generateCircleSystem();
 	void generateRocketSystem();
+	void generateSpringSystem();
 	void generateWindSystem();
 	void generateWhirlSystem();
 	void generateExplosionSystem();
