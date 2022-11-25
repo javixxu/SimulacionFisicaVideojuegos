@@ -44,6 +44,11 @@ void Particle::changeSize(double s, physx::PxTransform* pos, Vector4 c)
 	DeregisterRenderItem(renderItem);
 	renderItem = new RenderItem(CreateShape(physx::PxSphereGeometry(s)), pos, c);
 }
+void Particle::changeToBox(Vector3 tam) {
+	auto x=renderItem->transform->p;
+	DeregisterRenderItem(renderItem);
+	renderItem = new RenderItem(CreateShape(physx::PxBoxGeometry(tam)),new  physx::PxTransform(x), color);
+};
 
 bool Particle::alive(double t) {
 	timeAlive -= t;

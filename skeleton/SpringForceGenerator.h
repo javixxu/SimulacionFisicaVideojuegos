@@ -16,5 +16,6 @@ public:
 	virtual void updateForce(Particle* p, double duration) override;
 	~SpringForceGenerator();
 	inline void setK(double kk) { k = kk; };
+	void increaseK(double kk) { k += kk; };
 };
 

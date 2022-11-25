@@ -279,6 +279,7 @@
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="CircleGenerator.h" />
     <ClInclude Include="core.hpp" />
+    <ClInclude Include="ElasticBand.h" />
     <ClInclude Include="ExplosionForceGenerator.h" />
     <ClInclude Include="Firework.h" />
     <ClInclude Include="ForceGenerator.h" />

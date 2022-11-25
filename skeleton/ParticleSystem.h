@@ -33,6 +33,7 @@ public:
 	void generateWindSystem();
 	void generateWhirlSystem();
 	void generateExplosionSystem();
+	void generateElasticBandSystem();
 	void increaseDesTip(Vector3 increase);
 
 	void shootFirework(Firework::FIREWORK_TYPE type);

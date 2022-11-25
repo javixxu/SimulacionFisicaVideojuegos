@@ -54,6 +54,7 @@
     <ClInclude Include="ExplosionForceGenerator.h" />
     <ClInclude Include="SpringForceGenerator.h" />
     <ClInclude Include="AnchoredSpringFG.h" />
+    <ClInclude Include="ElasticBand.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

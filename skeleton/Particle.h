@@ -44,6 +44,7 @@ public:
 	inline void setTimeAlive(double time) { initialTimeAlive=timeAlive=time;}
 	inline void setColor(Vector4 c) { color = c; }
 	inline void setIsFire(bool f) { isFire_ = f; }
+	void changeToBox(Vector3 tam);
 
 	inline Vector3 getPosition() { return pose.p; }
 	inline Vector3 getVelocity() {return vel; }

@@ -10,7 +10,8 @@
 
 #include <iostream>
 #include "ParticleSystem.h"
-
+#include "AnchoredSpringFG.h"
+#include "ForceGenerator.h"
 
 using namespace physx;
 
@@ -161,6 +162,15 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		break;
 	case '-':
 		particleSystem->increaseDesTip(Vector3(-1.0, -1.0, 0.0));
+		break;
+	case '1':
+		dynamic_cast<AnchoredSpringFG*>(particleSystem->getForceGenerator("Anchored").get())->increaseK(0.5);
+		break;
+	case '2':
+		particleSystem->getForceGenerator("WindAnchored")->setActive(true, 5.0);			
+		break;
+	case '3':
+		particleSystem->generateElasticBandSystem();
 		break;
 	}
 	//case 'H': //Bola de fuego
