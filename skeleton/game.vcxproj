@@ -258,6 +258,7 @@
     <ClCompile Include="CircleGenerator.cpp" />
     <ClCompile Include="ExplosionForceGenerator.cpp" />
     <ClCompile Include="Firework.cpp" />
+    <ClCompile Include="FloatBounceForce.cpp" />
     <ClCompile Include="GaussianParticleGen.cpp" />
     <ClCompile Include="GravityForceGenerator.cpp" />
     <ClCompile Include="main.cpp" />
@@ -282,6 +283,7 @@
     <ClInclude Include="ElasticBand.h" />
     <ClInclude Include="ExplosionForceGenerator.h" />
     <ClInclude Include="Firework.h" />
+    <ClInclude Include="FloatBounceForce.h" />
     <ClInclude Include="ForceGenerator.h" />
     <ClInclude Include="GaussianParticleGen.h" />
     <ClInclude Include="GravityForceGenerator.h" />

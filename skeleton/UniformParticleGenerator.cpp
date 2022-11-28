@@ -5,13 +5,6 @@ UniformParticleGenerator::UniformParticleGenerator(Vector3 pos, Vector3 vel, dou
 	setName("UniformGenerator");
 	_model = new Particle();
 	rgbRandom = rgb; mass = massi;
-	/*
-	_model->setVelocity(Vector3(0.0, 50.0, 0.0));
-	_model->setPosition(Vector3(-50.0, 0.0, -150.0));
-	_model->setDamping(0.999);
-	_model->setTimeAlive(9.0);
-	_model->setMass(15.0);
-	_model->setAcceleration(Vector3(0.0, 1.0, 0.0));*/
 	gnd = default_random_engine(r());
 	num_particles = 5;
 	active = true;

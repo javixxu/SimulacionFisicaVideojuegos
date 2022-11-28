@@ -29,7 +29,7 @@ public:
 	vector<string>forcesNames;
 	//Particle(){};
 	Particle(Vector3 Pos=Vector3(0,0,0), Vector3 Vel = Vector3(0, 0, 0), Vector3 acceleration = Vector3(0, 0, 0),
-		double Damping = 0.999, double size = 2.0, TYPE Type = TYPE::UNUSED, Vector4 COLOR = Vector4(1.0, 0.6, 0.2, 1.0),double mass=1.0);
+		double Damping = 0.999, double size = 1.0, TYPE Type = TYPE::UNUSED, Vector4 COLOR = Vector4(1.0, 0.6, 0.2, 1.0),double mass=1.0);
 	~Particle();
 	virtual bool update(double t);
 	void integrate(double t);

@@ -3,8 +3,8 @@
 FloatBounceForce::FloatBounceForce(float h, float v, float d)
     : height(h), volume(v), liquid_density(d)
 {
-    lqparticle = new Particle({ 0, 0, 0 }, {}, {},0.999, 50);
-    lqparticle->setPosition({ 0, 0, 0 });
+    lqparticle = new Particle({ 0, 0, 0 }, {}, {},0.999, 0.1);
+    lqparticle->setPosition({ 0,-1, 0 });
 }
 
 FloatBounceForce::~FloatBounceForce(){

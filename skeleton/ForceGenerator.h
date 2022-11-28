@@ -22,7 +22,8 @@ public:
 	void setActive(bool x, double timeLimitt = -1) {
 		active = x; timerLimit = timeLimitt; };
 	bool canUpdateForce(double duration) {
-		bool x = (timerLimit == -1 || timerLimit >= timer + duration);
+		if (timerLimit == -1)return true;
+		bool x =  timerLimit >= timer + duration;
 		timer += duration;
 		active=x;
 		if (!x)cout << "OFF" << "\n";
