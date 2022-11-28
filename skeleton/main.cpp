@@ -172,6 +172,12 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	case '3':
 		particleSystem->generateElasticBandSystem();
 		break;
+	case '4':
+		particleSystem->Slinky();
+		break;
+	case '5':
+		particleSystem->generaflotacion();
+		break;
 	}
 	//case 'H': //Bola de fuego
 	//{

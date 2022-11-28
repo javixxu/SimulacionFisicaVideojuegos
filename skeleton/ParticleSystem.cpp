@@ -356,6 +356,64 @@ void ParticleSystem::generateElasticBandSystem() {
 	list_particles.push_back(p2);
 	
 }
+void ParticleSystem::Slinky() {
+	Particle* p1 = new Particle({ 0.0, 60.0, 0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, 2.0, Particle::UNUSED, { 1.0, 1.0, 1.0, 1.0 });
+	Particle* p2 = new Particle({ 0.0, 50.0, 0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, 2.0, Particle::UNUSED, { 0.0, 0.0, 1.0, 1.0 });
+	Particle* p3 = new Particle({ 0.0, 40.0, 0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, 2.0, Particle::UNUSED, { 0.0, 0.0, 1.0, 1.0 });
+	Particle* p4 = new Particle({ 0.0, 30.0, 0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, 2.0, Particle::UNUSED, { 0.0, 0.0, 1.0, 1.0 });
+	Particle* p5 = new Particle({ 0.0, 20.0, 0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, 2.0, Particle::UNUSED, { 0.0, 0.0, 1.0, 1.0 });
+	Particle* p6 = new Particle({ 0.0, 10.0, 0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, 2.0, Particle::UNUSED, { 0.0, 0.0, 1.0, 1.0 });
+
+	auto f1 = shared_ptr<ForceGenerator>(new SpringForceGenerator(p1, 50, 10)); //LA 1 CON LA 2
+	pForceRegistry->addRegistry(f1, p2);
+
+	auto f3 = shared_ptr<ForceGenerator>(new SpringForceGenerator(p2,40, 10)); //LA 2 CON LA 3
+	pForceRegistry->addRegistry(f3, p3);
+	auto f4 = shared_ptr<ForceGenerator>(new SpringForceGenerator(p3, 35, 10)); //LA 2 CON LA 3
+	pForceRegistry->addRegistry(f4, p2);
+
+	auto f5 = shared_ptr<ForceGenerator>(new SpringForceGenerator(p3,30, 10)); //LA 3 CON LA 4
+	pForceRegistry->addRegistry(f5, p4);
+	auto f6 = shared_ptr<ForceGenerator>(new SpringForceGenerator(p4, 25, 10)); //LA 3 CON LA 4
+	pForceRegistry->addRegistry(f6, p3);
+
+	auto f7 = shared_ptr<ForceGenerator>(new SpringForceGenerator(p4,20, 10)); //LA 4 CON LA 5
+	pForceRegistry->addRegistry(f7, p5);
+	auto f8 = shared_ptr<ForceGenerator>(new SpringForceGenerator(p5, 15, 10)); //LA 4 CON LA 5
+	pForceRegistry->addRegistry(f8, p4);
+
+	auto f9 = shared_ptr<ForceGenerator>(new SpringForceGenerator(p5,10, 10)); //LA 5 CON LA 6
+	pForceRegistry->addRegistry(f9, p6);
+	auto f10 = shared_ptr<ForceGenerator>(new SpringForceGenerator(p6, 5, 10)); //LA 5 CON LA 6
+	pForceRegistry->addRegistry(f10, p5);
+	
+	pForceRegistry->addRegistry(getForceGenerator("Gravity"), p2);
+	pForceRegistry->addRegistry(getForceGenerator("Gravity"), p3);
+	pForceRegistry->addRegistry(getForceGenerator("Gravity"), p4);
+	pForceRegistry->addRegistry(getForceGenerator("Gravity"), p5);
+	pForceRegistry->addRegistry(getForceGenerator("Gravity"), p6);
+
+
+	list_forces.push_back(f1);list_forces.push_back(f3); 
+	list_forces.push_back(f4);list_forces.push_back(f5); list_forces.push_back(f6);
+	list_forces.push_back(f7);list_forces.push_back(f8);list_forces.push_back(f9);
+	list_forces.push_back(f10);
+
+
+	list_particles.push_back(p1); p1->setTimeAlive(60);
+	list_particles.push_back(p2); p2->setTimeAlive(60);
+	list_particles.push_back(p3); p3->setTimeAlive(60);
+	list_particles.push_back(p4); p4->setTimeAlive(60);
+	list_particles.push_back(p5); p5->setTimeAlive(60);
+	list_particles.push_back(p6); p6->setTimeAlive(60);
+}
+
+void ParticleSystem::generaflotacion(){
+	Particle* p1 = new Particle({ 0.0, 60.0, 0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, 2.0, Particle::UNUSED, { 1.0, 1.0, 1.0, 1.0 });
+	p1->changeToBox({ 100,0.25,100 }); p1->setTimeAlive(60.0); list_particles.push_back(p1);
+
+
+}
 
 void ParticleSystem::increaseDesTip(Vector3 increase)
 {

@@ -34,6 +34,8 @@ public:
 	void generateWhirlSystem();
 	void generateExplosionSystem();
 	void generateElasticBandSystem();
+	void Slinky();
+	void generaflotacion();
 	void increaseDesTip(Vector3 increase);
 
 	void shootFirework(Firework::FIREWORK_TYPE type);
