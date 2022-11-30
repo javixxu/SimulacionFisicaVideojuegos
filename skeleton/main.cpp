@@ -12,6 +12,7 @@
 #include "ParticleSystem.h"
 #include "AnchoredSpringFG.h"
 #include "ForceGenerator.h"
+#include "FloatBounceForce.h"
 
 using namespace physx;
 
@@ -177,6 +178,17 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		break;
 	case '5':
 		particleSystem->generaflotacion();
+	case '8':		
+		particleSystem->increaseVolumeFloatSystem(1.0f);
+		break;
+	case '9':
+		particleSystem->increaseVolumeFloatSystem(-1.0f);
+		break;
+	case '/':
+		particleSystem->increaseHeightFloatSystem(1.0f);
+		break;
+	case '*':
+		particleSystem->increaseHeightFloatSystem(-1.0f);
 		break;
 	}
 	//case 'H': //Bola de fuego

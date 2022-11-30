@@ -12,7 +12,7 @@ SpringForceGenerator::SpringForceGenerator(Particle* other, double k, double res
 }
 
 void SpringForceGenerator::updateForce(Particle* p, double duration){
-	if (fabs(p->getInverseMass()) < 1e-10) return;
+	if (fabs(p->getInverseMass()) < 1e-10 || !canUpdateForce(duration)) return;
 	Vector3 force = other->getPosition() - p->getPosition();
 	const float length = force.normalize();
 	const float delta_x = length - resting_lenght;

@@ -1,9 +1,10 @@
 #include "ExplosionForceGenerator.h"
 #include "Particle.h"
-ExplosionForceGenerator::ExplosionForceGenerator(double R, double K, Vector3 centre,double time):centre(centre),R(R),K(K),time(time),active(false) {
+ExplosionForceGenerator::ExplosionForceGenerator(double R, double K, Vector3 centre,double time):centre(centre),R(R),K(K),time(time) {
+	active = false;
 }
 void ExplosionForceGenerator::updateForce(Particle* p, double duration){
-	if (!active||fabs(p->getInverseMass()) < t)return;
+	if (!canUpdateForce(duration) || fabs(p->getInverseMass()) < t)return;
 	timeActive += duration;
 	if (timeActive <= time)R=velSonido*timeActive;
 	float r = sqrt(pow(p->getPosition().x - centre.x, 2) + pow((p->getPosition().y - centre.y), 2) + pow((p->getPosition().z - centre.z), 2));

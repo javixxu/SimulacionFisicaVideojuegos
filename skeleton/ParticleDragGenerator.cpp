@@ -4,7 +4,7 @@ ParticleDragGenerator::ParticleDragGenerator(const float k1_, const float k2_):k
 }
 
 void ParticleDragGenerator::updateForce(Particle* p, double t) {
-	if (fabs(p->getInverseMass()) < 1e-10) return;
+	if (fabs(p->getInverseMass()) < 1e-10 || !canUpdateForce(t)) return;
 	p->addForce(calculateDrag(p->getVelocity()));
 }
 Vector3 ParticleDragGenerator::calculateDrag(Vector3 v) {

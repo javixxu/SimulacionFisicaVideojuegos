@@ -4,7 +4,7 @@ WhirlWindGenerator::WhirlWindGenerator(const Vector3 centre, const Vector3 vel, 
 WindGenerator(vel,K,K),K(K),centre(centre) {
 };
 void WhirlWindGenerator::updateForce(Particle* p, double duration) {
-	if (fabs(p->getInverseMass()) < 1e-10) return;
+	if (fabs(p->getInverseMass()) < 1e-10 || !canUpdateForce(duration)) return;
 	calculateVelocityWind(p->getPosition());
 	WindGenerator::updateForce(p, duration);
 };

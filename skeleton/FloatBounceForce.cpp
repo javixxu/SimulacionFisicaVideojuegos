@@ -12,6 +12,7 @@ FloatBounceForce::~FloatBounceForce(){
 }
 
 void FloatBounceForce::updateForce(Particle* p, double t){
+    if (fabs(p->getInverseMass()) < 1e-10 || !canUpdateForce(t)) return;
     float h = p->getPosition().y;
     float h0 = lqparticle->getPosition().y;
 

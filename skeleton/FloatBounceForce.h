@@ -12,5 +12,9 @@ public:
     FloatBounceForce(float h, float v, float d);
     ~FloatBounceForce();
     virtual void updateForce(Particle* p, double t);
+    void setVolume(float x) { volume = x; if (volume < 0)volume = 0.0; cout << volume << "\n"; };
+    float getVolume() { return volume; };
+    void setHeight(float x) { height = x; if (height < 0)height = 0.0; cout << height << "\n"; };
+    float getHeight() { return height; };
 };
 

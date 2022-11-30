@@ -411,20 +411,24 @@ void ParticleSystem::Slinky() {
 }
 
 void ParticleSystem::generaflotacion(){
-	Particle* p1 = new Particle({ 0.0, 0.0, 0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, 2.0, Particle::UNUSED, { 1.0, 0.0, 1.0, 1.0 });
-	p1->changeToBox({ 125,0.25,125 }); p1->setTimeAlive(60.0); list_particles.push_back(p1);
+	shared_ptr<ParticleGenerator> p = getParticleGenerator("Flotacion");
+	if (p != nullptr)
+		p->changeActive();
+	else {
+		Particle* p1 = new Particle({ 0.0, 0.0, 0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, 2.0, Particle::UNUSED, { 0.0, 0.0, 0.80, 1.0 });
+		p1->changeToBox({ 125,0.25,125 }); p1->setTimeAlive(100000.0); list_particles.push_back(p1);
 
-	auto f1 = shared_ptr<ForceGenerator>(new FloatBounceForce(50.0, 10.0, 1.0)); auto gravedad = getForceGenerator("Gravity");
-	list_forces.push_back(f1);
-	auto uniform = shared_ptr<ParticleGenerator>(new GaussianParticleGen({ 50,0,50}, { 0,0,0 }, 3.0,1.5));
-	uniform->setName("Flotacion"); list_generator.push_back(uniform);
-	auto molde = new Particle({ 0,0,0 }, {0.0,0.0,0.0}, {0,0,0}, 0.999, 10.0, Particle::UNUSED, { 0.0,0.0,1.0,1.0 }, 6.0);
-	uniform->setParticle(molde); molde->setTimeAlive(1.0);
-	uniform->setNumGenerator(1);
-	uniform->addParticleForceRegistry(pForceRegistry);
-	pForceRegistry->addRegistry(f1, molde);
-	pForceRegistry->addRegistry(gravedad, molde);
-
+		auto f1 = shared_ptr<ForceGenerator>(new FloatBounceForce(1.0, 1.0, 2.0)); auto gravedad = getForceGenerator("Gravity");
+		list_forces.push_back(f1); f1->setName("FloatForce");
+		auto gausian = shared_ptr<ParticleGenerator>(new GaussianParticleGen({ 50,0,50 }, { 0,0,0 }, 3.0, 0.5));
+		gausian->setName("Flotacion"); list_generator.push_back(gausian);
+		auto molde = new Particle({ 0,0,0 }, { 0.0,0.0,0.0 }, { 0,0,0 }, 0.999, 10.0, Particle::UNUSED, { 0.0,1.0,1.0,1.0 }, 1.0);
+		gausian->setParticle(molde); molde->setTimeAlive(5.0);
+		gausian->setNumGenerator(1);
+		gausian->addParticleForceRegistry(pForceRegistry);
+		pForceRegistry->addRegistry(f1, molde);
+		pForceRegistry->addRegistry(gravedad, molde);
+	}
 }
 
 void ParticleSystem::increaseDesTip(Vector3 increase)
@@ -435,4 +439,14 @@ void ParticleSystem::increaseDesTip(Vector3 increase)
 			if (f != nullptr) f->increaseDesTipVel(increase);
 		}
 	}
+}
+
+void ParticleSystem::increaseHeightFloatSystem(float x){
+	FloatBounceForce* w = dynamic_cast<FloatBounceForce*>(getForceGenerator("FloatForce").get());
+	w->setHeight(w->getHeight() + x);
+}
+
+void ParticleSystem::increaseVolumeFloatSystem(float x){
+	FloatBounceForce* w = dynamic_cast<FloatBounceForce*>(getForceGenerator("FloatForce").get());
+	w->setVolume(w->getVolume() + x);
 }

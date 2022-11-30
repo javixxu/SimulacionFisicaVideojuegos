@@ -3,11 +3,10 @@ WindGenerator::WindGenerator(const Vector3 vel, const float k1, const float k2, 
 	ParticleDragGenerator(k1,k2),velWind(vel),out(centre) ,range(range) {
 };
 void WindGenerator::updateForce(Particle* p, double duration){
-	if (!active||fabs(p->getInverseMass()) < 1e-10||!aplicateWindForce(p->getPosition())) return;
-	if (canUpdateForce(duration)) {
-		p->addForce(calculateDrag(p->getVelocity() - velWind));
-	}
-	else cout << "OFF\n";
+	if (fabs(p->getInverseMass()) < 1e-10||!aplicateWindForce(p->getPosition())||!canUpdateForce(duration)) return;
+	
+	 p->addForce(calculateDrag(p->getVelocity() - velWind));
+		
 }
 bool WindGenerator::aplicateWindForce(Vector3 pos){
 	return range==-1||

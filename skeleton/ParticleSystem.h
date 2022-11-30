@@ -38,6 +38,9 @@ public:
 	void generaflotacion();
 	void increaseDesTip(Vector3 increase);
 
+	void increaseHeightFloatSystem(float x);
+	void increaseVolumeFloatSystem(float x);
+
 	void shootFirework(Firework::FIREWORK_TYPE type);
 	void onParticleDeath(Particle* pt);
 	void explosion(bool activee);
