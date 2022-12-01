@@ -317,25 +317,29 @@ void ParticleSystem::generateRocketSystem() {
 }
 
 void ParticleSystem::generateSpringSystem() {
+	if (getForceGenerator("WindAnchored")) {
+		getForceGenerator("WindAnchored")->setActive(true, 5.0);
+	}
+	else {
+		Particle* p1 = new Particle({ -10.0,10.0,0.0 }, { 0.0,0.0,0.0 }, { 0,0,0 }, 0.85, 2.0, Particle::UNUSED, { 1.0,0.0,0.0,1.0 }, 2.0);
+		Particle* p2 = new Particle({ 10.0,10.0,0.0 }, { 0.0,0.0,0.0 }, { 0,0,0 }, 0.85, 2.0, Particle::UNUSED, { 0.0,1.0,0.0,1.0 }, 2.0);
+		p1->setMass(2.0); p2->setMass(2.0); p1->setTimeAlive(60); p2->setTimeAlive(60);
+		auto it = shared_ptr<ForceGenerator>(new SpringForceGenerator(p2, 10.0, 15.0)); it->setName("SpringSystem1");
+		list_forces.push_back(it); pForceRegistry->addRegistry(it, p1);
+		it = shared_ptr<ForceGenerator>(new SpringForceGenerator(p1, 10.0, 15.0)); it->setName("SpringSystem2");
+		list_forces.push_back(it); pForceRegistry->addRegistry(it, p2);
+		list_particles.push_back(p1);
+		list_particles.push_back(p2);
 
-	Particle* p1 = new Particle({ -10.0,10.0,0.0 }, { 0.0,0.0,0.0 }, { 0,0,0 }, 0.85, 2.0, Particle::UNUSED, { 1.0,0.0,0.0,1.0 },2.0);
-	Particle* p2 = new Particle({ 10.0,10.0,0.0 }, { 0.0,0.0,0.0 }, { 0,0,0 }, 0.85, 2.0, Particle::UNUSED, { 0.0,1.0,0.0,1.0 },2.0);
-	p1->setMass(2.0); p2->setMass(2.0); p1->setTimeAlive(60); p2->setTimeAlive(60);
-	auto it = shared_ptr<ForceGenerator>(new SpringForceGenerator(p2, 10.0, 15.0)); it->setName("SpringSystem1");
-	list_forces.push_back(it);pForceRegistry->addRegistry(it, p1); 
-	it = shared_ptr<ForceGenerator>(new SpringForceGenerator(p1, 10.0, 15.0)); it->setName("SpringSystem2");
-	list_forces.push_back(it); pForceRegistry->addRegistry(it, p2); 
-	list_particles.push_back(p1);
-	list_particles.push_back(p2);
-		
-	Particle* p3 = new Particle({ -10.0, 20.0, 0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85,2.0,Particle::UNUSED,{ 1.0, 1.0, 1.0, 1.0 });
-	p3->setTimeAlive(60); 
-	auto f3 = shared_ptr<ForceGenerator>(new AnchoredSpringFG(10, 10, { 10.0, 20.0, 0.0 })); f3->setName("Anchored");
-	auto f4 = shared_ptr<ForceGenerator>(new WindGenerator({ 0.0, -10.0, 0.0 })); f4->setName("WindAnchored"); f4->setActive(false);
-	pForceRegistry->addRegistry(f4, p3); pForceRegistry->addRegistry(f3, p3); pForceRegistry->addRegistry(getForceGenerator("Gravity"), p3);
-	list_forces.push_back(f3);
-	list_forces.push_back(f4);
-	list_particles.push_back(p3);
+		Particle* p3 = new Particle({ -10.0, 20.0, 0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, 2.0, Particle::UNUSED, { 1.0, 1.0, 1.0, 1.0 });
+		p3->setTimeAlive(60);
+		auto f3 = shared_ptr<ForceGenerator>(new AnchoredSpringFG(2.0, 5, { 10.0, 20.0, 0.0 })); f3->setName("Anchored");
+		auto f4 = shared_ptr<ForceGenerator>(new WindGenerator({ 1000.0, 10.0, 0.0 })); f4->setName("WindAnchored"); f4->setActive(false);
+		pForceRegistry->addRegistry(f3, p3); pForceRegistry->addRegistry(f4, p3); pForceRegistry->addRegistry(getForceGenerator("Gravity"), p3);
+		list_forces.push_back(f3);
+		list_forces.push_back(f4);
+		list_particles.push_back(p3);
+	}
 }
 
 void ParticleSystem::generateElasticBandSystem() {

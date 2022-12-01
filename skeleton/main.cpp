@@ -167,9 +167,6 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	case '1':
 		dynamic_cast<AnchoredSpringFG*>(particleSystem->getForceGenerator("Anchored").get())->increaseK(0.5);
 		break;
-	case '2':
-		particleSystem->getForceGenerator("WindAnchored")->setActive(true, 5.0);			
-		break;
 	case '3':
 		particleSystem->generateElasticBandSystem();
 		break;

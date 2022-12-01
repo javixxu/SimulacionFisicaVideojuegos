@@ -20,7 +20,7 @@ public:
 	void setTimeLimit(double x) { timerLimit = x; };
 	void clearTimer() { timer = 0.0; };
 	void setActive(bool x, double timeLimitt = -1) {
-		active = x; timerLimit = timeLimitt; };
+		active = x; timerLimit = timeLimitt; clearTimer();};
 	bool canUpdateForce(double duration) {
 		if (!active) return false;
 		else if (timerLimit == -1)return true;		
