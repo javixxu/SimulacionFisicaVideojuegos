@@ -152,9 +152,6 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	case 'T':
 		particleSystem->shootFirework(Firework::CIRCULAR);
 		break;
-	case 'J':
-		particleSystem->generateSpringSystem();
-		break;
 	case 'F':
 		particleSystem->generateRocketSystem();
 		break;
@@ -163,6 +160,10 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		break;
 	case '-':
 		particleSystem->increaseDesTip(Vector3(-1.0, -1.0, 0.0));
+		break;
+
+	case 'J':
+		particleSystem->generateSpringSystem();
 		break;
 	case '1':
 		dynamic_cast<AnchoredSpringFG*>(particleSystem->getForceGenerator("Anchored").get())->increaseK(0.5);

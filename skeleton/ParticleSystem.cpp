@@ -334,7 +334,7 @@ void ParticleSystem::generateSpringSystem() {
 		Particle* p3 = new Particle({ -10.0, 20.0, 0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, 2.0, Particle::UNUSED, { 1.0, 1.0, 1.0, 1.0 });
 		p3->setTimeAlive(60);
 		auto f3 = shared_ptr<ForceGenerator>(new AnchoredSpringFG(2.0, 5, { 10.0, 20.0, 0.0 })); f3->setName("Anchored");
-		auto f4 = shared_ptr<ForceGenerator>(new WindGenerator({ 1000.0, 10.0, 0.0 })); f4->setName("WindAnchored"); f4->setActive(false);
+		auto f4 = shared_ptr<ForceGenerator>(new WindGenerator({ 10.0, 10.0, 0.0 }, 5.0, 0.0, { 0,20,0 }, 100)); f4->setName("WindAnchored"); f4->setActive(false);
 		pForceRegistry->addRegistry(f3, p3); pForceRegistry->addRegistry(f4, p3); pForceRegistry->addRegistry(getForceGenerator("Gravity"), p3);
 		list_forces.push_back(f3);
 		list_forces.push_back(f4);
