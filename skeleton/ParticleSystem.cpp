@@ -359,34 +359,36 @@ void ParticleSystem::generateElasticBandSystem() {
 }
 
 void ParticleSystem::Slinky() {
-	Particle* p1 = new Particle({ 0.0, 60.0, 0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, 2.0, Particle::UNUSED, { 1.0, 1.0, 1.0, 1.0 });
-	Particle* p2 = new Particle({ 0.0, 50.0, 0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, 2.0, Particle::UNUSED, { 0.0, 0.0, 1.0, 1.0 });
-	Particle* p3 = new Particle({ 0.0, 40.0, 0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, 2.0, Particle::UNUSED, { 0.0, 0.0, 1.0, 1.0 });
-	Particle* p4 = new Particle({ 0.0, 30.0, 0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, 2.0, Particle::UNUSED, { 0.0, 0.0, 1.0, 1.0 });
-	Particle* p5 = new Particle({ 0.0, 20.0, 0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, 2.0, Particle::UNUSED, { 0.0, 0.0, 1.0, 1.0 });
-	Particle* p6 = new Particle({ 0.0, 10.0, 0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, 2.0, Particle::UNUSED, { 0.0, 0.0, 1.0, 1.0 });
+	double p = 3.0;
+	Particle* p1 = new Particle({ 0.0, 60.0, 0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, p, Particle::UNUSED, { 1.0, 1.0, 1.0, 1.0 },p);
+	Particle* p2 = new Particle({ 0.0, 55.0, 0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, p, Particle::UNUSED, { 0.0, 0.0, 1.0, 1.0 }, p);
+	Particle* p3 = new Particle({ 0.0, 50.0, 0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, p, Particle::UNUSED, { 0.0, 0.0, 1.0, 1.0 }, p);
+	Particle* p4 = new Particle({ 0.0, 45.0, 0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, p, Particle::UNUSED, { 0.0, 0.0, 1.0, 1.0 }, p);
+	Particle* p5 = new Particle({ 0.0, 40.0, 0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, p, Particle::UNUSED, { 0.0, 0.0, 1.0, 1.0 }, p);
+	Particle* p6 = new Particle({ 0.0, 35.0, 0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, p, Particle::UNUSED, { 0.0, 0.0, 1.0, 1.0 }, p);
 
-	auto f1 = shared_ptr<ForceGenerator>(new SpringForceGenerator(p1, 50, 10)); //LA 1 CON LA 2
+	double l = 7.5;
+	auto f1 = shared_ptr<ForceGenerator>(new SpringForceGenerator(p1, 45, l)); //LA 1 CON LA 2
 	pForceRegistry->addRegistry(f1, p2);
 
-	auto f3 = shared_ptr<ForceGenerator>(new SpringForceGenerator(p2,40, 10)); //LA 2 CON LA 3
+	auto f3 = shared_ptr<ForceGenerator>(new SpringForceGenerator(p2,35, l)); //LA 2 CON LA 3
 	pForceRegistry->addRegistry(f3, p3);
-	auto f4 = shared_ptr<ForceGenerator>(new SpringForceGenerator(p3, 35, 10)); //LA 2 CON LA 3
+	auto f4 = shared_ptr<ForceGenerator>(new SpringForceGenerator(p3, 40, l)); //LA 2 CON LA 3
 	pForceRegistry->addRegistry(f4, p2);
 
-	auto f5 = shared_ptr<ForceGenerator>(new SpringForceGenerator(p3,30, 10)); //LA 3 CON LA 4
+	auto f5 = shared_ptr<ForceGenerator>(new SpringForceGenerator(p3,25, l)); //LA 3 CON LA 4
 	pForceRegistry->addRegistry(f5, p4);
-	auto f6 = shared_ptr<ForceGenerator>(new SpringForceGenerator(p4, 25, 10)); //LA 3 CON LA 4
+	auto f6 = shared_ptr<ForceGenerator>(new SpringForceGenerator(p4, 30, l)); //LA 3 CON LA 4
 	pForceRegistry->addRegistry(f6, p3);
 
-	auto f7 = shared_ptr<ForceGenerator>(new SpringForceGenerator(p4,20, 10)); //LA 4 CON LA 5
+	auto f7 = shared_ptr<ForceGenerator>(new SpringForceGenerator(p4,15, l)); //LA 4 CON LA 5
 	pForceRegistry->addRegistry(f7, p5);
-	auto f8 = shared_ptr<ForceGenerator>(new SpringForceGenerator(p5, 15, 10)); //LA 4 CON LA 5
+	auto f8 = shared_ptr<ForceGenerator>(new SpringForceGenerator(p5, 20, l)); //LA 4 CON LA 5
 	pForceRegistry->addRegistry(f8, p4);
 
-	auto f9 = shared_ptr<ForceGenerator>(new SpringForceGenerator(p5,10, 10)); //LA 5 CON LA 6
+	auto f9 = shared_ptr<ForceGenerator>(new SpringForceGenerator(p5,5, l)); //LA 5 CON LA 6
 	pForceRegistry->addRegistry(f9, p6);
-	auto f10 = shared_ptr<ForceGenerator>(new SpringForceGenerator(p6, 5, 10)); //LA 5 CON LA 6
+	auto f10 = shared_ptr<ForceGenerator>(new SpringForceGenerator(p6, 10, l)); //LA 5 CON LA 6
 	pForceRegistry->addRegistry(f10, p5);
 	
 	pForceRegistry->addRegistry(getForceGenerator("Gravity"), p2);
