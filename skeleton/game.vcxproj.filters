@@ -26,6 +26,7 @@
     <ClCompile Include="SpringForceGenerator.cpp" />
     <ClCompile Include="AnchoredSpringFG.cpp" />
     <ClCompile Include="FloatBounceForce.cpp" />
+    <ClCompile Include="WorldManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -57,6 +58,7 @@
     <ClInclude Include="AnchoredSpringFG.h" />
     <ClInclude Include="ElasticBand.h" />
     <ClInclude Include="FloatBounceForce.h" />
+    <ClInclude Include="WorldManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

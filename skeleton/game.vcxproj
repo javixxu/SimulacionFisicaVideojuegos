@@ -274,6 +274,7 @@
     <ClCompile Include="UniformParticleGenerator.cpp" />
     <ClCompile Include="WhirlWindGenerator.cpp" />
     <ClCompile Include="WindGenerator.cpp" />
+    <ClCompile Include="WorldManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnchoredSpringFG.h" />
@@ -301,6 +302,7 @@
     <ClInclude Include="UniformParticleGenenerator.h" />
     <ClInclude Include="WhirlWindGenerator.h" />
     <ClInclude Include="WindGenerator.h" />
+    <ClInclude Include="WorldManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
