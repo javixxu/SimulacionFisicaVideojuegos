@@ -27,7 +27,7 @@ protected:
 	list<shared_ptr<ForceGenerator>> list_forces;
 	list<shared_ptr<RigidGenerator>> list_generators;
 	RigidForceRegistry* rfr;
-	int numMax=1000;
+	int numMax=25;
 	int currentNum;
 public:
 	WorldManager(PxScene* gScene, PxPhysics* gPhysics);

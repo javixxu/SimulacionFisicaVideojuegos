@@ -56,6 +56,7 @@ public:
 			Vector3 pos = _model->solidType->getGlobalPose().p;
 			if (!active)pos.y += 4000;
 			else pos.y -= 4000;
+			_model->solidType->setGlobalPose(PxTransform(pos));
 		}
 	};
 	void setPhysx(PxPhysics* gP) { gPhysics = gP; };
@@ -86,11 +87,24 @@ public:
 				*rg->item->shape->getMaterialFromInternalFaceIndex(1.0));*/
 			shape = CreateShape(PxSphereGeometry(2.0));
 			break;
+		case physx::PxGeometryType::eBOX:
+			if (type == DYNAMIC) {
+				auto x = gPhysics->createRigidDynamic(PxTransform(pos));
+				x->setLinearVelocity(y->getLinearVelocity());
+				x->setAngularVelocity(y->getAngularVelocity());
+				x->setMass(y->getMass());
+				new_solid = x;
+			}
+			else {
+				new_solid = gPhysics->createRigidDynamic(PxTransform(pos));
+			}
+			/*shape = PxRigidActorExt::createExclusiveShape(*new_solid, PxSphereGeometry(5.0),
+				*rg->item->shape->getMaterialFromInternalFaceIndex(1.0));*/
+			shape = CreateShape(PxBoxGeometry(Vector3(3.5)));
+			break;
 		/*case physx::PxGeometryType::ePLANE:
 			break;
 		case physx::PxGeometryType::eCAPSULE:
-			break;
-		case physx::PxGeometryType::eBOX:
 			break;
 		case physx::PxGeometryType::eCONVEXMESH:
 			break;
