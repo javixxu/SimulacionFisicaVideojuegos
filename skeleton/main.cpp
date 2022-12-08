@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include "ParticleSystem.h"
+#include "WorldManager.h"
 #include "AnchoredSpringFG.h"
 #include "ForceGenerator.h"
 #include "FloatBounceForce.h"
@@ -32,6 +33,7 @@ PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 
 ParticleSystem* particleSystem;
+WorldManager* worldManager;
 Particle* particula;
 // Initialize physics engine START DE LA ESCENA Y DE LAS FISICAS
 void initPhysics(bool interactive)
@@ -58,6 +60,7 @@ void initPhysics(bool interactive)
 	gScene = gPhysics->createScene(sceneDesc);
 	
 	particleSystem = new ParticleSystem();
+	worldManager = new WorldManager(gScene,gPhysics);
 }
 
 
@@ -76,6 +79,7 @@ void stepPhysics(bool interactive, double t)
 		shot->integrate(t);
 	}*/
 	particleSystem->update(t);
+	worldManager->update(t);
 }
 
 // Function to clean data
@@ -95,6 +99,7 @@ void cleanupPhysics(bool interactive)
 	gFoundation->release();
 
 	delete particleSystem;
+	delete worldManager;
 	
 	/*delete particula; particula = nullptr;
 	for (auto shot : cargador) {
@@ -187,6 +192,12 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		break;
 	case '*':
 		particleSystem->increaseHeightFloatSystem(-1.0f);
+		break;
+	case '0':
+		worldManager->systemOne();
+		break;
+	case '7':
+		worldManager->systemWind();
 		break;
 	}
 	//case 'H': //Bola de fuego

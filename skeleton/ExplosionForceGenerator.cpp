@@ -17,3 +17,18 @@ void ExplosionForceGenerator::updateForce(Particle* p, double duration){
 	}	 
 	p->addForce(force);
 }
+
+void ExplosionForceGenerator::updateForceRigid(PxRigidDynamic* solid, double duration){
+	if (!canUpdateForce(duration) || fabs(solid->getInvMass()) < t)return;
+	timeActive += duration;
+	if (timeActive <= time)R = velSonido * timeActive;
+	float r = sqrt(pow(solid->getGlobalPose().p.x - centre.x, 2) + pow((solid->getGlobalPose().p.y - centre.y), 2) + pow((solid->getGlobalPose().p.z - centre.z), 2));
+	Vector3 force = { 0,0,0 };
+	if (r < R) {
+		double intens = K / pow(r, 2);
+		double intens2 = exp(-(duration / time));
+		force = { (solid->getGlobalPose().p.x - centre.x), (solid->getGlobalPose().p.y - centre.y), (solid->getGlobalPose().p.z - centre.z) };
+		force *= intens * intens2;
+	}
+	solid->addForce(force);
+}

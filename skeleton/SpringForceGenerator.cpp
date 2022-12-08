@@ -20,5 +20,14 @@ void SpringForceGenerator::updateForce(Particle* p, double duration){
 	p->addForce(force);
 }
 
+void SpringForceGenerator::updateForceRigid(PxRigidDynamic* solid, double duration){
+	if (fabs(solid->getInvMass()) < 1e-10 || !canUpdateForce(duration)) return;
+	Vector3 force = other->getPosition() - solid->getGlobalPose().p;
+	const float length = force.normalize();
+	const float delta_x = length - resting_lenght;
+	force *= delta_x * k;
+	solid->addForce(force);
+}
+
 SpringForceGenerator::~SpringForceGenerator(){
 }

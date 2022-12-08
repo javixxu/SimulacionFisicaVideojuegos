@@ -12,5 +12,6 @@ class ExplosionForceGenerator:public ForceGenerator {
 public:
 	ExplosionForceGenerator(double R,double K,Vector3 centre,double time);
 	virtual void updateForce(Particle* p, double duration);
+	virtual void updateForceRigid(PxRigidDynamic* solid, double duration);
 	void OnActive(bool activee) { setActive(activee); timeActive = 0; };
 };

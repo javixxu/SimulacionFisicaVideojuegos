@@ -14,6 +14,7 @@ public:
 	SpringForceGenerator(Vector3 r, double k, double resting_lenght);
 	SpringForceGenerator(Particle* other, double k, double resting_lenght);
 	virtual void updateForce(Particle* p, double duration) override;
+	virtual void updateForceRigid(PxRigidDynamic* solid, double duration) override;
 	~SpringForceGenerator();
 	inline void setK(double kk) { k = kk; };
 	void increaseK(double kk) { k += kk; };

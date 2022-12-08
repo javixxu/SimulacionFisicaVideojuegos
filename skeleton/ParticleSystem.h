@@ -8,6 +8,7 @@
 #include "ParticleForceRegistry.h"
 
 using namespace std;
+
 class ParticleSystem{
 
 	list<Particle*> list_particles;

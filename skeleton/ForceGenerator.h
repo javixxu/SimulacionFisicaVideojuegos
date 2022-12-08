@@ -5,6 +5,10 @@
 #include <string>
 #include <random>
 #include <iostream>
+
+using namespace std;
+using namespace physx;
+
 class ForceGenerator {
 protected:
 	std::string name;
@@ -13,6 +17,7 @@ protected:
 	bool active = true;
 public:
 	virtual void updateForce(Particle* particle, double duration) = 0;
+	virtual void updateForceRigid(PxRigidDynamic* solid, double duration) = 0;
 	void setName(std::string name_) { name = name_;};
 	string getName() {
 		return name;
