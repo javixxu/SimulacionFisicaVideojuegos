@@ -12,7 +12,7 @@ class RigidForceRegistry :public multimap<shared_ptr<ForceGenerator>, PxRigidDyn
 public:
 	void updateForces(double duration) {
 		for (auto it = begin(); it != end(); it++)
-			it->first->updateForceRigid(it->second, duration);
+			if(it->second->getName()!="molde")it->first->updateForceRigid(it->second, duration);
 	}
 	void addRegistry(shared_ptr<ForceGenerator> fg, PxRigidDynamic* p) {
 		this->insert({ fg, p });
