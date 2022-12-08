@@ -38,7 +38,7 @@ public:
 	void addStaticBox(Vector3 pos, Vector3 tam,Vector4 color);
 	void addDynamicBall(Vector3 pos, double tam, Vector3 vel, Vector4 color);
 	inline bool CanGenerateObject() { return numMax > currentNum; };
-	inline void updateNumObjects(int num) { currentNum += num; };
+	inline void updateNumObjects(int num) { currentNum += num; cout << currentNum<<"\n"; };
 	inline PxScene* getScene() { return gScene; };
 	shared_ptr<RigidGenerator> getRigidGenerator(string name);
 	shared_ptr<ForceGenerator> getForceGenerator(string name);

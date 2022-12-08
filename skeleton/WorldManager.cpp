@@ -144,7 +144,7 @@ void WorldManager::systemOne(){
 			1.0, 10.0, true)); x->setName("Torque1"); list_generators.push_back(x);
 		x->setRegistry(rfr);
 		PxRigidDynamic* new_solid;
-		new_solid = gPhysics->createRigidDynamic(PxTransform({ 0,50,0 })); new_solid->setName("molde");
+		new_solid = gPhysics->createRigidDynamic(PxTransform({ 0,50,0 }));
 		new_solid->setLinearVelocity({ 0,0,0 });
 		new_solid->setAngularVelocity({ 0,0,0 });
 		//new_solid->setMass(110);
@@ -157,7 +157,7 @@ void WorldManager::systemOne(){
 		rg->solidType = new_solid; rg->timeAlive = 15; rg->maxTimeAlive = 5; rg->item = xy;
 		list_generators.front()->setBody(rg);
 		list_generators.front()->setPhysx(gPhysics);
-		//list_generators.front()->changeActive();
+		list_generators.front()->changeActive();
 		auto it2 = shared_ptr<ForceGenerator>(new TorqueForce({ 0,0,0 }, 10, 100)); it2->setName("TORQUE");
 		rfr->addRegistry(it2, static_cast<PxRigidDynamic*>(rg->solidType));
 		rg->forcesNames.push_back(it2->getName());
@@ -173,7 +173,7 @@ void WorldManager::systemWind(){
 			1.0, 10.0, true)); x->setName("Wind1"); list_generators.push_back(x);
 		x->setRegistry(rfr);
 		PxRigidDynamic* new_solid;
-		new_solid = gPhysics->createRigidDynamic(PxTransform({ 0,50,0 })); new_solid->setName("molde");
+		new_solid = gPhysics->createRigidDynamic(PxTransform({ 0,50,0 }));
 		new_solid->setLinearVelocity({ 0,0,0 });
 		new_solid->setAngularVelocity({ 0,0,0 });
 		//new_solid->setMass(110);
@@ -186,7 +186,7 @@ void WorldManager::systemWind(){
 		rg->solidType = new_solid; rg->timeAlive = 15; rg->maxTimeAlive = 5; rg->item = xy;
 		list_generators.front()->setBody(rg);
 		list_generators.front()->setPhysx(gPhysics);
-		//list_generators.front()->changeActive();
+		list_generators.front()->changeActive();
 		auto it2 = shared_ptr<ForceGenerator>(new WindGenerator({ 0,0,10 }, 5, 5, { 0,0,0 }, 200)); it2->setName("WIND1");
 		rfr->addRegistry(it2, static_cast<PxRigidDynamic*>(rg->solidType));
 		rg->forcesNames.push_back(it2->getName());

@@ -24,7 +24,7 @@ protected:
 
 	Vector3 mean_pos, mean_vel;
 	int num_particles=20;
-	bool active=true;
+	bool active=false;
 	bool rgbRandom;
 	double mass;
 	
@@ -53,7 +53,7 @@ public:
 	inline void changeActive() {
 		active = !active;
 		if (_model != nullptr) {
-			Vector3 pos = _model->solidType->getGlobalPose().p;
+			Vector3& pos = _model->solidType->getGlobalPose().p;
 			if (!active)pos.y += 4000;
 			else pos.y -= 4000;
 		}
