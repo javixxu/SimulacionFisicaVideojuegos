@@ -48,12 +48,13 @@ void initPhysics(bool interactive)
 
 	gPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *gFoundation, PxTolerancesScale(),true,gPvd);
 
-	gMaterial = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);//materail del suelo
+	gMaterial = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);//material del suelo
+	//gMaterial = gPhysics->createMaterial(0.9f, 0.5f, 0.999f);//material del suelo
 
 	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
 	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
 	sceneDesc.gravity = PxVec3(0.0f, -9.8f, 0.0f);
-	gDispatcher = PxDefaultCpuDispatcherCreate(2);
+	gDispatcher = PxDefaultCpuDispatcherCreate(4);
 	sceneDesc.cpuDispatcher = gDispatcher;
 	sceneDesc.filterShader = contactReportFilterShader;
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
@@ -91,6 +92,8 @@ void cleanupPhysics(bool interactive)
 	gScene->release();
 	gDispatcher->release();
 	// -----------------------------------------------------
+	delete particleSystem;
+	delete worldManager;
 	gPhysics->release();	
 	PxPvdTransport* transport = gPvd->getTransport();
 	gPvd->release();
@@ -98,8 +101,7 @@ void cleanupPhysics(bool interactive)
 	
 	gFoundation->release();
 
-	delete particleSystem;
-	delete worldManager;
+	
 	
 	/*delete particula; particula = nullptr;
 	for (auto shot : cargador) {

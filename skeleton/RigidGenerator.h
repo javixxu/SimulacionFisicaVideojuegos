@@ -77,7 +77,7 @@ public:
 				auto x = gPhysics->createRigidDynamic(PxTransform(pos));
 				x->setLinearVelocity(y->getLinearVelocity());
 				x->setAngularVelocity(y->getAngularVelocity());
-				x->setMass(y->getMass());
+				x->setLinearDamping(y->getLinearDamping());
 				new_solid = x;
 			}
 			else {
@@ -92,7 +92,7 @@ public:
 				auto x = gPhysics->createRigidDynamic(PxTransform(pos));
 				x->setLinearVelocity(y->getLinearVelocity());
 				x->setAngularVelocity(y->getAngularVelocity());
-				x->setMass(y->getMass());
+				x->setLinearDamping(y->getLinearDamping());
 				new_solid = x;
 			}
 			else {
@@ -100,6 +100,7 @@ public:
 			}
 			/*shape = PxRigidActorExt::createExclusiveShape(*new_solid, PxSphereGeometry(5.0),
 				*rg->item->shape->getMaterialFromInternalFaceIndex(1.0));*/
+			
 			shape = CreateShape(PxBoxGeometry(Vector3(3.5)));
 			break;
 		/*case physx::PxGeometryType::ePLANE:
@@ -125,8 +126,9 @@ public:
 		nuevo->item = new RenderItem(shape, new_solid, rg->item->color);
 		gScene->addActor(*new_solid);
 		nuevo->solidType = new_solid;
-
-		if (y != nullptr) { //Le meto las fuerzas
+		
+		if (type == DYNAMIC) { //Le meto las fuerzas
+			PxRigidBodyExt::setMassAndUpdateInertia(*(static_cast<PxRigidDynamic*>(nuevo->solidType)), 3.0);
 			auto aux2 = static_cast<PxRigidDynamic*>(nuevo->solidType);
 			for (int i = 0; i < _model->forcesNames.size(); i++) {
 				nuevo->forcesNames.push_back(_model->forcesNames[i]);
