@@ -21,6 +21,7 @@ protected:
 	WorldManager* mng;
 	PxScene* gScene;
 	PxPhysics* gPhysics;
+	PxMaterial* mat=nullptr;
 
 	Vector3 mean_pos, mean_vel;
 	int num_particles=20;
@@ -60,6 +61,7 @@ public:
 		}
 	};
 	void setPhysx(PxPhysics* gP) { gPhysics = gP; };
+	void setMaterial(PxMaterial* matt) { mat = matt; };
 	void addRigidForceRegistry(RigidForceRegistry* prf) { rfr = prf; };
 
 	RigidSolid* Clone(RigidSolid* rg ) {
@@ -69,39 +71,26 @@ public:
 		auto y = static_cast<PxRigidDynamic*>(rg->solidType);
 		PxRigidActor* new_solid;
 		auto typee = rg->item->shape->getGeometryType();
+
+		if (type == DYNAMIC) {
+			auto x = gPhysics->createRigidDynamic(PxTransform(pos));
+			x->setLinearVelocity(y->getLinearVelocity());
+			x->setAngularVelocity(y->getAngularVelocity());
+			x->setLinearDamping(y->getLinearDamping());
+			x->setMassSpaceInertiaTensor(y->getMassSpaceInertiaTensor());
+			new_solid = x;
+		}
+		else new_solid = gPhysics->createRigidDynamic(PxTransform(pos));
+		
 		PxShape* shape;
+
 		switch (typee)
 		{
 		case physx::PxGeometryType::eSPHERE:
-			if (type == DYNAMIC) {
-				auto x = gPhysics->createRigidDynamic(PxTransform(pos));
-				x->setLinearVelocity(y->getLinearVelocity());
-				x->setAngularVelocity(y->getAngularVelocity());
-				x->setLinearDamping(y->getLinearDamping());
-				new_solid = x;
-			}
-			else {
-				new_solid= gPhysics->createRigidDynamic(PxTransform(pos));
-			}
-			/*shape = PxRigidActorExt::createExclusiveShape(*new_solid, PxSphereGeometry(5.0),
-				*rg->item->shape->getMaterialFromInternalFaceIndex(1.0));*/
-			shape = CreateShape(PxSphereGeometry(2.0));
+			shape = CreateShape(PxSphereGeometry(2.0),mat);
 			break;
-		case physx::PxGeometryType::eBOX:
-			if (type == DYNAMIC) {
-				auto x = gPhysics->createRigidDynamic(PxTransform(pos));
-				x->setLinearVelocity(y->getLinearVelocity());
-				x->setAngularVelocity(y->getAngularVelocity());
-				x->setLinearDamping(y->getLinearDamping());
-				new_solid = x;
-			}
-			else {
-				new_solid = gPhysics->createRigidDynamic(PxTransform(pos));
-			}
-			/*shape = PxRigidActorExt::createExclusiveShape(*new_solid, PxSphereGeometry(5.0),
-				*rg->item->shape->getMaterialFromInternalFaceIndex(1.0));*/
-			
-			shape = CreateShape(PxBoxGeometry(Vector3(3.5)));
+		case physx::PxGeometryType::eBOX:			
+			shape = CreateShape(PxBoxGeometry(Vector3(3.5)),mat);
 			break;
 		/*case physx::PxGeometryType::ePLANE:
 			break;
@@ -116,8 +105,8 @@ public:
 		case physx::PxGeometryType::eGEOMETRY_COUNT:
 			break;
 		case physx::PxGeometryType::eINVALID:
-			break;*/
-	/*	default:
+			break;
+		default:
 			break;*/
 		}
 		//guardo las cosas

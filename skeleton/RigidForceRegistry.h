@@ -6,8 +6,6 @@
 using namespace std;
 using namespace physx;
 
-//typedef pair<shared_ptr<ForceGenerator>, PxRigidDynamic*> FRPair;
-
 class RigidForceRegistry :public multimap<shared_ptr<ForceGenerator>, PxRigidDynamic*> {
 public:
 	void updateForces(double duration) {

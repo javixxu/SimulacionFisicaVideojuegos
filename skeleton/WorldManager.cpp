@@ -109,7 +109,7 @@ void WorldManager::addDynamicBall(Vector3 pos, double tam, Vector3 vel, Vector4 
 	new_solid->setAngularVelocity({ 0,0,0 });
 
 	auto shape = CreateShape(PxSphereGeometry(tam)); new_solid->attachShape(*shape);
-	PxRigidBodyExt::setMassAndUpdateInertia(*new_solid, 500.0);
+	PxRigidBodyExt::setMassAndUpdateInertia(*new_solid, 100.0);
 
 	auto x=new RenderItem(shape, new_solid, color);
 	gScene->addActor(*new_solid);
@@ -142,7 +142,7 @@ void WorldManager::systemOne(){
 	auto it = getRigidGenerator("Torque1");
 	if (it != nullptr)it->changeActive();
 	else {
-		auto x = shared_ptr<RigidGenerator>(new GaussianRigidGenerator(this, DYNAMIC, { -50,1,50 }, { 50,10,50 },
+		auto x = shared_ptr<RigidGenerator>(new GaussianRigidGenerator(this, DYNAMIC, { -50,1,50 }, { 20,10,20 },
 			1.0, 10.0, true)); x->setName("Torque1"); list_generators.push_back(x);
 		x->setRegistry(rfr);
 		PxRigidDynamic* new_solid;
@@ -150,22 +150,20 @@ void WorldManager::systemOne(){
 		new_solid->setLinearVelocity({ 0,0,0 });
 		new_solid->setAngularVelocity({ 0,0,0 });
 		//new_solid->setLinearDamping(0.999);
-		//new_solid->setMass(10);
 		auto shape = CreateShape(PxBoxGeometry(Vector3(3.5)));
-		//PxRigidActorExt::createExclusiveShape(*new_solid, PxSphereGeometry(5.0), *gPhysics->createMaterial(0.5f, 0.5f, 0.1f));
 		new_solid->attachShape(*shape);
 		//new_solid->setMassSpaceInertiaTensor({ size.y * size.z,size.x * size.z,size.x * size.y });
-		//PxRigidBodyExt::setMassAndUpdateInertia(*new_solid, 2.0);
+		PxRigidBodyExt::setMassAndUpdateInertia(*new_solid, 100.0);
 		auto xy = new RenderItem(shape, new_solid, { 0,0,1,1 });
 		RigidSolid* rg = new RigidSolid();
 		rg->solidType = new_solid; rg->timeAlive = 25; rg->maxTimeAlive = 25; rg->item = xy;
 		x->setBody(rg);
 		x->setPhysx(gPhysics);
 
-		/*auto it2 = shared_ptr<ForceGenerator>(new TorqueForce({ 0,0,0 }, 10, 100)); it2->setName("TORQUE");
+		auto it2 = shared_ptr<ForceGenerator>(new TorqueForce({ 0,0,0 }, 10, 100)); it2->setName("TORQUE");
 		rfr->addRegistry(it2, static_cast<PxRigidDynamic*>(rg->solidType));
 		rg->forcesNames.push_back(it2->getName());
-		list_forces.push_back(it2);*/
+		list_forces.push_back(it2);
 	}
 }
 
@@ -180,17 +178,16 @@ void WorldManager::systemWind(){
 		new_solid = gPhysics->createRigidDynamic(PxTransform({ 0,50,0 })); new_solid->setName("molde");
 		new_solid->setLinearVelocity({ 0,0,0 });
 		new_solid->setAngularVelocity({ 0,0,0 });
-		//new_solid->setMass(110);
 		auto shape = CreateShape(PxSphereGeometry(2.0));
-		//PxRigidActorExt::createExclusiveShape(*new_solid, PxSphereGeometry(5.0), *gPhysics->createMaterial(0.5f, 0.5f, 0.1f));
 		new_solid->attachShape(*shape);
+		//PxRigidBodyExt::setMassAndUpdateInertia(*new_solid, 50.0);
 		//new_solid->setMassSpaceInertiaTensor({ size.y * size.z,size.x * size.z,size.x * size.y });
 		auto xy = new RenderItem(shape, new_solid, { 0,0,1,1 });
 		RigidSolid* rg = new RigidSolid();
 		rg->solidType = new_solid; rg->timeAlive = 15; rg->maxTimeAlive = 5; rg->item = xy;
 		x->setBody(rg);
 		x->setPhysx(gPhysics);
-		//list_generators.front()->changeActive();
+
 		auto it2 = shared_ptr<ForceGenerator>(new WindGenerator({ 0,0,10 }, 5, 5, { 0,0,0 }, 200)); it2->setName("WIND1");
 		rfr->addRegistry(it2, static_cast<PxRigidDynamic*>(rg->solidType));
 		rg->forcesNames.push_back(it2->getName());
