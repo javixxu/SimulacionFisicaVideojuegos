@@ -8,7 +8,7 @@ Firework::Firework() :Particle() {
 
 Firework::Firework(Vector3 Pos, Vector3 Vel, Vector3 acceleration, double Damping, double size, FIREWORK_TYPE type_, Vector4 COLOR,int numGenn )
 	:Particle(Pos,Vel,acceleration,Damping,size,FIREWORK,COLOR),type(type_),numGen(numGenn) {
-
+	setMass(1.0);
 }
 
 Firework* Firework::clone() const {

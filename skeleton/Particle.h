@@ -22,8 +22,9 @@ protected:
 
 	bool isFire_;
 	double size_;
+	bool visible = true;
 	Vector4 color;
-public: enum TYPE { UNUSED, PROYECTIL,FIREWORK };
+public: enum TYPE { UNUSED, PROYECTIL, FIREWORK, DISPARO };
 private:TYPE type;
 public:
 	vector<string>forcesNames;
@@ -60,8 +61,8 @@ public:
 	inline physx::PxTransform* getTransform() {return &pose;}	
 	inline Vector4 getColor(){ return color;}
 	inline bool isFire() {return isFire_;}
-	
-
+	inline void setVisible(bool x) { pose.p.x += x != true ? 4000 : -4000; visible = x; }
+	inline bool getVisible() { return visible; }
 	// Clears accumulated force
 	void clearForce();
 	// Add force to apply in next integration only

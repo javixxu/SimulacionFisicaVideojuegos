@@ -6,6 +6,7 @@
 #include "WorldManager.h"
 #include "PxScene.h"
 #include "RenderUtils.hpp"
+#include "define_materials.h"
 
 using namespace std;
 using namespace physx;
@@ -24,6 +25,7 @@ protected:
 	PxMaterial* mat=nullptr;
 
 	Vector3 mean_pos, mean_vel;
+	Vector4 color = COLOR_BASE_GENERADORES_RIGIDS;
 	int num_particles=20;
 	bool active=true;
 	bool rgbRandom;
@@ -42,15 +44,14 @@ public:
 		_model = _Model;
 	}
 	inline bool isActive() { return active; }
-
 	inline void setRegistry(RigidForceRegistry* rfrr) {
 		rfr = rfrr;
 	};
-
 	void setNumGenerator(int x) { 
 		num_particles = x; 
 	};
-
+	inline void setColor(Vector4 x) { color = x; };
+	inline Vector4 getColor() { return color; };
 	inline void changeActive() {
 		active = !active;
 		if (_model != nullptr) {
@@ -63,7 +64,6 @@ public:
 	void setPhysx(PxPhysics* gP) { gPhysics = gP; };
 	void setMaterial(PxMaterial* matt) { mat = matt; };
 	void addRigidForceRegistry(RigidForceRegistry* prf) { rfr = prf; };
-
 	RigidSolid* Clone(RigidSolid* rg ) {
 		RigidSolid* nuevo = new RigidSolid();
 		nuevo->timeAlive = nuevo->maxTimeAlive = rg->maxTimeAlive;

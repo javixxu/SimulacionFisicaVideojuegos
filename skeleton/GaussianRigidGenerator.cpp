@@ -30,6 +30,7 @@ void GaussianRigidGenerator::generateRigid(list<RigidSolid*>& l){
 			auto b = rand() % 255 + 0;
 			_model->item->color = Vector4(r / 255.0, g / 255.0, b / 255.0, 1.0);
 		}
+		else _model->item->color = color;
 		newpos = posmolde + Vector3(mean_pos.x * d(gnd), mean_pos.y * d(gnd), mean_pos.z * d(gnd));
 		RigidSolid* nueva = Clone(_model);
 		nueva->solidType->setGlobalPose(PxTransform(newpos));
@@ -40,7 +41,7 @@ void GaussianRigidGenerator::generateRigid(list<RigidSolid*>& l){
 			aux->setMass(y->getMass() + abs(d(gnd) * mass));
 			aux->setLinearVelocity(newvel);
 		}
-		//nueva->timeAlive = nueva->maxTimeAlive =_model->maxTimeAlive+ devTip_t * d(gnd); 
+		//nueva->timeAlive = nueva->maxTimeAlive =_model->maxTimeAlive+ devTip_t * rnd(); 
 		//cout << nueva->maxTimeAlive << "\n";
 		
 		mng->updateNumObjects(1);

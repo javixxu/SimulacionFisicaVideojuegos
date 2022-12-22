@@ -7,68 +7,205 @@
     <ClCompile Include="Render\Render.cpp">
       <Filter>Render</Filter>
     </ClCompile>
-    <ClCompile Include="RenderUtils.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="callbacks.cpp" />
-    <ClCompile Include="Particle.cpp" />
-    <ClCompile Include="Proyectil.cpp" />
-    <ClCompile Include="ParticleSystem.cpp" />
-    <ClCompile Include="GaussianParticleGen.cpp" />
-    <ClCompile Include="UniformParticleGenerator.cpp" />
-    <ClCompile Include="Firework.cpp" />
-    <ClCompile Include="RocketGenerator.cpp" />
-    <ClCompile Include="CircleGenerator.cpp" />
-    <ClCompile Include="GravityForceGenerator.cpp" />
-    <ClCompile Include="ParticleDragGenerator.cpp" />
-    <ClCompile Include="WindGenerator.cpp" />
-    <ClCompile Include="WhirlWindGenerator.cpp" />
-    <ClCompile Include="ExplosionForceGenerator.cpp" />
-    <ClCompile Include="SpringForceGenerator.cpp" />
-    <ClCompile Include="AnchoredSpringFG.cpp" />
-    <ClCompile Include="FloatBounceForce.cpp" />
-    <ClCompile Include="WorldManager.cpp" />
-    <ClCompile Include="GaussianRigidGenerator.cpp" />
-    <ClCompile Include="TorqueForce.cpp" />
+    <ClCompile Include="AnchoredSpringFG.cpp">
+      <Filter>Source\Forces</Filter>
+    </ClCompile>
+    <ClCompile Include="CircleGenerator.cpp">
+      <Filter>Source\Generators</Filter>
+    </ClCompile>
+    <ClCompile Include="ExplosionForceGenerator.cpp">
+      <Filter>Source\Forces</Filter>
+    </ClCompile>
+    <ClCompile Include="Firework.cpp">
+      <Filter>Source\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="FloatBounceForce.cpp">
+      <Filter>Source\Forces</Filter>
+    </ClCompile>
+    <ClCompile Include="GaussianParticleGen.cpp">
+      <Filter>Source\Generators</Filter>
+    </ClCompile>
+    <ClCompile Include="GaussianRigidGenerator.cpp">
+      <Filter>Source\Generators</Filter>
+    </ClCompile>
+    <ClCompile Include="GravityForceGenerator.cpp">
+      <Filter>Source\Forces</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Source\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleDragGenerator.cpp">
+      <Filter>Source\Forces</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>Source\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Proyectil.cpp">
+      <Filter>Source\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="callbacks.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderUtils.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="RocketGenerator.cpp">
+      <Filter>Source\Generators</Filter>
+    </ClCompile>
+    <ClCompile Include="SpringForceGenerator.cpp">
+      <Filter>Source\Forces</Filter>
+    </ClCompile>
+    <ClCompile Include="WindGenerator.cpp">
+      <Filter>Source\Forces</Filter>
+    </ClCompile>
+    <ClCompile Include="WhirlWindGenerator.cpp">
+      <Filter>Source\Forces</Filter>
+    </ClCompile>
+    <ClCompile Include="TorqueForce.cpp">
+      <Filter>Source\Forces</Filter>
+    </ClCompile>
+    <ClCompile Include="UniformParticleGenerator.cpp">
+      <Filter>Source\Generators</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldManager.cpp">
+      <Filter>Source\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source\Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="core.hpp" />
     <ClInclude Include="Render\Camera.h">
       <Filter>Render</Filter>
     </ClInclude>
     <ClInclude Include="Render\Render.h">
       <Filter>Render</Filter>
     </ClInclude>
-    <ClInclude Include="RenderUtils.hpp" />
-    <ClInclude Include="callbacks.hpp" />
-    <ClInclude Include="Particle.h" />
-    <ClInclude Include="Proyectil.h" />
-    <ClInclude Include="ParticleGenerator.h" />
-    <ClInclude Include="ParticleSystem.h" />
-    <ClInclude Include="GaussianParticleGen.h" />
-    <ClInclude Include="UniformParticleGenenerator.h" />
-    <ClInclude Include="Firework.h" />
-    <ClInclude Include="RocketGenerator.h" />
-    <ClInclude Include="CircleGenerator.h" />
-    <ClInclude Include="ForceGenerator.h" />
-    <ClInclude Include="ParticleForceRegistry.h" />
-    <ClInclude Include="GravityForceGenerator.h" />
-    <ClInclude Include="ParticleDragGenerator.h" />
-    <ClInclude Include="WindGenerator.h" />
-    <ClInclude Include="WhirlWindGenerator.h" />
-    <ClInclude Include="ExplosionForceGenerator.h" />
-    <ClInclude Include="SpringForceGenerator.h" />
-    <ClInclude Include="AnchoredSpringFG.h" />
-    <ClInclude Include="ElasticBand.h" />
-    <ClInclude Include="FloatBounceForce.h" />
-    <ClInclude Include="WorldManager.h" />
-    <ClInclude Include="RigidForceRegistry.h" />
-    <ClInclude Include="RigidGenerator.h" />
-    <ClInclude Include="GaussianRigidGenerator.h" />
-    <ClInclude Include="TorqueForce.h" />
+    <ClInclude Include="AnchoredSpringFG.h">
+      <Filter>Header\Forces</Filter>
+    </ClInclude>
+    <ClInclude Include="CircleGenerator.h">
+      <Filter>Header\Generators</Filter>
+    </ClInclude>
+    <ClInclude Include="ElasticBand.h">
+      <Filter>Header\Forces</Filter>
+    </ClInclude>
+    <ClInclude Include="ExplosionForceGenerator.h">
+      <Filter>Header\Forces</Filter>
+    </ClInclude>
+    <ClInclude Include="Firework.h">
+      <Filter>Header\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="FloatBounceForce.h">
+      <Filter>Header\Forces</Filter>
+    </ClInclude>
+    <ClInclude Include="ForceGenerator.h">
+      <Filter>Header\Forces</Filter>
+    </ClInclude>
+    <ClInclude Include="GaussianParticleGen.h">
+      <Filter>Header\Generators</Filter>
+    </ClInclude>
+    <ClInclude Include="GaussianRigidGenerator.h">
+      <Filter>Header\Generators</Filter>
+    </ClInclude>
+    <ClInclude Include="GravityForceGenerator.h">
+      <Filter>Header\Forces</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSystem.h">
+      <Filter>Header\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Proyectil.h">
+      <Filter>Header\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleForceRegistry.h">
+      <Filter>Header\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleDragGenerator.h">
+      <Filter>Header\Forces</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Header\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderUtils.hpp">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="callbacks.hpp">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleGenerator.h">
+      <Filter>Header\Generators</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidForceRegistry.h">
+      <Filter>Header\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidGenerator.h">
+      <Filter>Header\Generators</Filter>
+    </ClInclude>
+    <ClInclude Include="RocketGenerator.h">
+      <Filter>Header\Generators</Filter>
+    </ClInclude>
+    <ClInclude Include="SpringForceGenerator.h">
+      <Filter>Header\Forces</Filter>
+    </ClInclude>
+    <ClInclude Include="UniformParticleGenenerator.h">
+      <Filter>Header\Generators</Filter>
+    </ClInclude>
+    <ClInclude Include="WhirlWindGenerator.h">
+      <Filter>Header\Forces</Filter>
+    </ClInclude>
+    <ClInclude Include="WindGenerator.h">
+      <Filter>Header\Forces</Filter>
+    </ClInclude>
+    <ClInclude Include="TorqueForce.h">
+      <Filter>Header\Forces</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldManager.h">
+      <Filter>Header\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="core.hpp">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="define_materials.h">
+      <Filter>Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
       <UniqueIdentifier>{d04b4f9f-5a69-465e-8070-25c6d0bcd3c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header">
+      <UniqueIdentifier>{0c41774e-91b7-4e7a-aa8c-bafafa21aa79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Managers">
+      <UniqueIdentifier>{4664fe9f-3238-486a-9ad3-24dd708211f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Objects">
+      <UniqueIdentifier>{8500d487-cf5b-49ef-9b53-5ed321c1a9dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Forces">
+      <UniqueIdentifier>{008aa22a-a6a9-4b1b-9d97-5818d8ad6061}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Generators">
+      <UniqueIdentifier>{3b60a2d8-77f3-40b5-a966-0eed67dd2e52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{461ec722-70b4-4252-aede-bbef02f2212d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Managers">
+      <UniqueIdentifier>{5b60a4b5-e96e-467c-83fc-9e1803a0c2cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Forces">
+      <UniqueIdentifier>{ce8ffc5f-d264-4e05-be1e-d0002ab534b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Generators">
+      <UniqueIdentifier>{bec0e1a5-26e9-474e-b347-a75a3575b66b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Objects">
+      <UniqueIdentifier>{ac18e17a-4bdc-4526-b938-ecbb2630009c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -14,6 +14,7 @@
 #include "AnchoredSpringFG.h"
 #include "ForceGenerator.h"
 #include "FloatBounceForce.h"
+#include "Game.h"
 
 using namespace physx;
 
@@ -31,10 +32,8 @@ PxPvd*                  gPvd        = NULL;
 PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
+Game* game;
 
-ParticleSystem* particleSystem;
-WorldManager* worldManager;
-Particle* particula;
 // Initialize physics engine START DE LA ESCENA Y DE LAS FISICAS
 void initPhysics(bool interactive)
 {
@@ -59,9 +58,8 @@ void initPhysics(bool interactive)
 	sceneDesc.filterShader = contactReportFilterShader;
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
-	
-	particleSystem = new ParticleSystem();
-	worldManager = new WorldManager(gScene,gPhysics);
+
+	game = new Game(gScene, gPhysics,GetCamera());
 }
 
 
@@ -72,15 +70,9 @@ void initPhysics(bool interactive)
 void stepPhysics(bool interactive, double t)
 {
 	PX_UNUSED(interactive);
-
 	gScene->simulate(t);
 	gScene->fetchResults(true);
-	/*for (auto shot : cargador) {
-		if(shot!=nullptr)
-		shot->integrate(t);
-	}*/
-	particleSystem->update(t);
-	worldManager->update(t);
+	game->update(t);
 }
 
 // Function to clean data
@@ -92,142 +84,26 @@ void cleanupPhysics(bool interactive)
 	gScene->release();
 	gDispatcher->release();
 	// -----------------------------------------------------
-	delete particleSystem;
-	delete worldManager;
+	delete game;
 	gPhysics->release();	
 	PxPvdTransport* transport = gPvd->getTransport();
 	gPvd->release();
-	transport->release();
-	
+	transport->release();	
 	gFoundation->release();
-
-	
-	
-	/*delete particula; particula = nullptr;
-	for (auto shot : cargador) {
-		if (shot != nullptr)
-			delete shot;
-	}*/
 }
 
 // Function called when a key is pressed INTERACIONAR CON TECLADO
 void keyPress(unsigned char key, const PxTransform& camera)
 {
 	PX_UNUSED(camera);
-
-	switch(toupper(key))
-	{
-	//case 'B': break;
-	//case ' ':	break;
-	case ' ':
-	{
-		break;
-	}
-	case 'M':
-		particleSystem->generateHosepipeSystem();
-		break;
-	case 'N':
-		particleSystem->generateFogSystem();
-		break;
-	case 'O':
-		particleSystem->generateWindSystem();
-		break;
-	case 'P':
-		particleSystem->generateWhirlSystem();
-		break;
-	case 'U':
-		particleSystem->generateExplosionSystem();
-		break;
-	case 'Y':
-		particleSystem->explosion(true);
-		break;
-	case 'I':
-		particleSystem->explosion(false);
-		break;
-	case 'C':
-		particleSystem->explosion(false);
-		break;
-	case 'L':
-		particleSystem->generateFlamesSystem();
-		break;
-	case 'E':
-		particleSystem->shootFirework(Firework::BASIC);
-		break;
-	case 'R':
-		particleSystem->shootFirework(Firework::LINEAR);
-		break;
-	case 'T':
-		particleSystem->shootFirework(Firework::CIRCULAR);
-		break;
-	case 'F':
-		particleSystem->generateRocketSystem();
-		break;
-	case '+':
-		particleSystem->increaseDesTip(Vector3(1.0, 1.0, 0.0));
-		break;
-	case '-':
-		particleSystem->increaseDesTip(Vector3(-1.0, -1.0, 0.0));
-		break;
-
-	case 'J':
-		particleSystem->generateSpringSystem();
-		break;
-	case '1':
-		dynamic_cast<AnchoredSpringFG*>(particleSystem->getForceGenerator("Anchored").get())->increaseK(0.5);
-		break;
-	case '3':
-		particleSystem->generateElasticBandSystem();
-		break;
-	case '4':
-		particleSystem->Slinky();
-		break;
-	case '5':
-		particleSystem->generaflotacion();
-	case '8':		
-		particleSystem->increaseVolumeFloatSystem(1.0f);
-		break;
-	case '9':
-		particleSystem->increaseVolumeFloatSystem(-1.0f);
-		break;
-	case '/':
-		particleSystem->increaseHeightFloatSystem(1.0f);
-		break;
-	case '*':
-		particleSystem->increaseHeightFloatSystem(-1.0f);
-		break;
-	case '0':
-		worldManager->systemOne();
-		break;
-	case '7':
-		worldManager->systemWind();
-		break;
-	}
-	//case 'H': //Bola de fuego
-	//{
-	//	auto bullet = new Particle(camera.p, GetCamera()->getDir() * 30, Vector4(255 / 250.0, 128 / 250.0, 0.0, 1.0), Particle::TYPE::PROYECTIL);
-	//	bullet->setAcceleration(Vector3(0.0, 0.6, 0.0));
-	//	bullet->setDamping(0.9);
-	//	bullet->setMass(1.0);
-	//	cargador.push_back(bullet);
-	//	break;
-	//}
-	//case 'F': //Laser
-	//{
-	//	auto bullet = new Particle(camera.p, GetCamera()->getDir() * 30, Vector4(135 / 250.0, 206 / 250.0, 250 / 250.0, 1.0),Particle::TYPE::PROYECTIL);
-	//	bullet->setAcceleration(Vector3(0.0, 0.0, 0.0));
-	//	bullet->setDamping(0.99);
-	//	bullet->setMass(0.1);
-	//	cargador.push_back(bullet);
-	//	break;
-	//}
-	
-	//}
+	game->keyPress(key);
 }
 
 void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 {
 	PX_UNUSED(actor1);
 	PX_UNUSED(actor2);
+	game->collisions(actor1, actor2);
 }
 
 

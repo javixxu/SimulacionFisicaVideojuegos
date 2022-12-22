@@ -8,7 +8,7 @@ protected:
 	double resting_lenght;
 	double time;
 	Vector3 r;
-	Particle* other;
+	Particle* other=nullptr;
 public:
 	SpringForceGenerator();
 	SpringForceGenerator(Vector3 r, double k, double resting_lenght);

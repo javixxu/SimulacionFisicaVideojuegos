@@ -32,6 +32,8 @@
 #define PHYSX_SNIPPET_CAMERA_H
 
 #include "foundation/PxTransform.h"
+#include <PxScene.h>
+class Game;
 
 namespace Snippets
 {
@@ -48,11 +50,26 @@ public:
 	physx::PxVec3		getEye()	const;//pos del ojo
 	physx::PxVec3		getDir()	const;//direccion en al que mira
 	physx::PxTransform	getTransform() const;
+	inline void setGlofBall(physx::PxRigidDynamic* ball,Game* gamee) {
+		golfBall = ball; 
+		game = gamee;
+	};
+	void update();
+	inline void setFollow(bool followw) { follow = followw; }
+	inline bool getFollow() { return follow; }
+	inline void setDir(physx::PxVec3 dirr) { mDir = dirr; };
 private:
 	physx::PxVec3	mEye;
 	physx::PxVec3	mDir;
 	int				mMouseX;
 	int				mMouseY;
+	//pelota y variables
+	physx::PxRigidDynamic* golfBall=nullptr;
+	Game* game=nullptr;
+	//Mov seguimiento de pelota
+	float foco= 8;
+	const float maxFoco=13, minFoco=3;
+	bool follow = true;
 };
 
 
