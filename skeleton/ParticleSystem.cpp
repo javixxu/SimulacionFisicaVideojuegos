@@ -207,12 +207,12 @@ void ParticleSystem::generateFogSystem(string name, Vector3 pos, Vector3 tam, Ve
 		s->setName(name);		
 		//pos = Vector3(0.0, 30.0, 0.0)  vel=Vector3(2.5, 3.0, -2.5) 
 		Particle* p = new Particle(pos, dir, Vector3(0), 0.75,5.0,
-			Particle::UNUSED,Vector4(1.0, 1.0, 1.0, 0.25),1.25);
+			Particle::UNUSED,Vector4(1.0, 1.0, 1.0, 0.75),1.25);
 		pForceRegistry->addRegistry(windGenerator, p);
 		pForceRegistry->addRegistry(getForceGenerator("Gravity"), p);
 		p->setTimeAlive(1.0);		
 		s->setParticle(p);
-		s->setNumGenerator(3);
+		s->setNumGenerator(25);
 		s->addParticleForceRegistry(pForceRegistry);
 		list_generator.push_back(shared_ptr<ParticleGenerator>(s));
 	}
